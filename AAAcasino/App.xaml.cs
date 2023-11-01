@@ -17,6 +17,7 @@ namespace AAAcasino
                 {
                     ClientPageViewModels = new List<IPageViewModel>
                     {
+                        new LogInViewModel()
                     }
                 }
             }.Show();
