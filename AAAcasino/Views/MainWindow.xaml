@@ -5,15 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:l="clr-namespace:AAAcasino"
         xmlns:vm="clr-namespace:AAAcasino.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Title ="{Binding Title}"
         mc:Ignorable="d"
-        Height="450" Width="800"
+        WindowState="Maximized"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel, IsDesignTimeCreatable=True}">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
+        <i:Interaction.Triggers>
+            <i:KeyTrigger Key="Enter">
+                <i:InvokeCommandAction Command="{Binding InitCommand}"/>
+            </i:KeyTrigger>
+        </i:Interaction.Triggers>
         <ContentPresenter Content="{Binding SelectedPageViewModel}"/>
     </Grid>
 </Window>

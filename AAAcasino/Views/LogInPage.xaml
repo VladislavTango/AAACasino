@@ -8,6 +8,17 @@
                     xmlns:components ="clr-namespace:AAAcasino.Components">
     <DataTemplate DataType="{x:Type vm:LogInViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:LogInViewModel}">
+            <StackPanel>
+                <WrapPanel>
+                    
+                </WrapPanel>
+                <WrapPanel>
+                    
+                </WrapPanel>
+                <WrapPanel Visibility="Collapsed">
+                    
+                </WrapPanel>
+            </StackPanel>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

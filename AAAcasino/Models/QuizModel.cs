@@ -5,6 +5,12 @@ namespace AAAcasino.Models
 {
     internal class QuizModel
     {
+        private int _id;
+        public int ID
+        {
+            get => _id;
+            set => _id = value;
+        }
         private List<QuizNode> _quizNodes;
         public List<QuizNode> QuizNodes { get => _quizNodes; }
         public void AddQuizNode(QuizNode node) { _quizNodes.Add(node); }

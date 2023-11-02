@@ -1,4 +1,6 @@
 ﻿using AAAcasino.ViewModels.Base;
+using System.Reflection;
+using System;
 
 namespace AAAcasino.Models
 {
@@ -33,6 +35,13 @@ namespace AAAcasino.Models
         {
             get => _history; 
             set => Set(ref _history, value);
+        }
+        public UserModel(string username, string password)
+        {
+            _username = username;
+            _password = password;
+            _balance = 0;
+            _history = new HistoryModel();
         }
     }
 }
