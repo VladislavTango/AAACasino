@@ -61,7 +61,9 @@ namespace AAAcasino.ViewModels
             else
             {
                 MainViewModel.User = user;
-                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[1]; // Вместо 1 enum
+                MainViewModel.SelectedPageViewModel = user.DefalutUser ?
+                    MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE] :
+                    MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
             }
         }
         private bool CanLogInCommand(object parameter) => true;

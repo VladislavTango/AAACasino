@@ -8,6 +8,14 @@ using System.Windows.Input;
 
 namespace AAAcasino.ViewModels
 {
+    enum NumberClientPage
+    {
+        LOGIN_PAGE = 0,
+        PROFILE_PAGE = 1,
+       // QUIZES_PAGE = 2,
+       // CURRENT_QUIZ_PAGE = 3,
+        ADMIN_PAGE = 2,
+    }
     internal class MainWindowViewModel : ViewModel
     {
         #region base property main
@@ -48,7 +56,7 @@ namespace AAAcasino.ViewModels
         private bool CanInitCommand(object parameter) => _init;
         private void OnInitCommand(object parameter)
         {
-            SelectedPageViewModel = ClientPageViewModels[0];
+            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.LOGIN_PAGE];
             _init = false;
             ImgVis = Visibility.Collapsed;
         }

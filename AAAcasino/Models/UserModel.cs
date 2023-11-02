@@ -30,6 +30,12 @@ namespace AAAcasino.Models
             get => _balance; 
             set => Set(ref _balance, value);
         }
+        private bool _defalutUser = true;
+        public bool DefalutUser
+        {
+            get => _defalutUser;
+            set => Set(ref _defalutUser, value);
+        }
         private HistoryModel? _history;
         public HistoryModel? History
         {
