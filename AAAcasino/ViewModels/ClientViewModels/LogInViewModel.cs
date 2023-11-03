@@ -78,7 +78,7 @@ namespace AAAcasino.ViewModels.ClientViewModels
             {
                 MainViewModel.User = new UserModel(_name, _pass);
                 MainViewModel.User.Balance = 100.0d;
-                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
                 MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
                 MainWindowViewModel.applicationContext.Add(MainViewModel.User);
                 MainWindowViewModel.applicationContext.SaveChanges();
