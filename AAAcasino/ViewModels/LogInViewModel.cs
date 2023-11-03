@@ -62,7 +62,7 @@ namespace AAAcasino.ViewModels
             {
                 MainViewModel.User = user;
                 MainViewModel.SelectedPageViewModel = user.DefalutUser ?
-                    MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE] :
+                    MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE] :
                     MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
             }
         }
@@ -77,7 +77,9 @@ namespace AAAcasino.ViewModels
             else
             {
                 MainViewModel.User = new UserModel(_name, _pass);
-                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.LOGIN_PAGE]; // Вместо 1 enum
+                MainViewModel.User.Balance = 100.0d;
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+               // MainViewModel.SelectedPageViewModel = MainViewModel.SlotPageViewModels[(int)NumberSlotPage.MINESLOT_PAGE];
                 MainWindowViewModel.applicationContext.Add(MainViewModel.User);
                 MainWindowViewModel.applicationContext.SaveChanges();
             }

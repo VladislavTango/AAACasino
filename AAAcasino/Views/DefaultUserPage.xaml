@@ -8,13 +8,15 @@
     <DataTemplate DataType="{x:Type vm:DefaultUserViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:DefaultUserViewModel}">
             <DockPanel>
-                <Grid DockPanel.Dock="Top">
+                <Grid DockPanel.Dock="Top" Height="50">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    <Button Command="{Binding ProfileOpenCommand}" Content="ПРОФИЛЬ"
+                            Grid.Column="0"/>
                 </Grid>
                 <Grid DockPanel.Dock="Bottom">
                     <ContentPresenter Content="{Binding SelectedPageViewModel}"/>

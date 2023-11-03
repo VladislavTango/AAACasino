@@ -11,18 +11,29 @@ namespace AAAcasino.ViewModels
     enum NumberClientPage
     {
         LOGIN_PAGE = 0,
-        PROFILE_PAGE = 1,
+        USER_PAGE = 1,
         ADMIN_PAGE = 2,
+        PROFILE_PAGE = 3,
+    }
+    enum NumberSlotPage
+    {
+        MINESLOT_PAGE = 0
     }
     internal class MainWindowViewModel : ViewModel
     {
         #region base property main
         private IPageViewModel _selectedPageViewModel;
         private IList<IPageViewModel> _clientPageViewModels;
+        private IList<IPageViewModel> _slotPageViewModels;
         public IList<IPageViewModel> ClientPageViewModels
         {
             get => _clientPageViewModels;
             set => Set(ref _clientPageViewModels, value);
+        }
+        public IList<IPageViewModel> SlotPageViewModels
+        {
+            get => _slotPageViewModels;
+            set => Set(ref _slotPageViewModels, value);
         }
         public IPageViewModel SelectedPageViewModel
         {

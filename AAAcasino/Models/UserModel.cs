@@ -24,8 +24,8 @@ namespace AAAcasino.Models
             get => _password;
             set => Set(ref _password, value);
         }
-        private int _balance;
-        public int Balance
+        private double _balance;
+        public double Balance
         {
             get => _balance; 
             set => Set(ref _balance, value);

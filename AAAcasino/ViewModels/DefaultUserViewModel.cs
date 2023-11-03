@@ -1,12 +1,13 @@
 ﻿using AAAcasino.ViewModels.Base;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace AAAcasino.ViewModels
 {
     internal class DefaultUserViewModel : ViewModel, IPageViewModel
     {
         #region IPageVM
-        public string Title => $"{MainViewModel.User.Username}";
+        public string Title => "User page";
         public MainWindowViewModel MainViewModel { get; set; } = null!;
         public void SetAnyModel(object? model) { return; }
         #endregion
@@ -20,5 +21,14 @@ namespace AAAcasino.ViewModels
                 OnPropertyChanged(nameof(Title));
             }
         }
+        #region commands
+        public ICommand ProfileOpenCommand { get; set; }
+        private bool CanProfileOpenCommand(object parameter) => true;
+        private void OnProfileOpenCommand(object parameter)
+        {
+            SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
+
+        }
+        #endregion
     }
 }
