@@ -5,10 +5,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Views/LogInPage.xaml"/>
-                <ResourceDictionary Source="Views/DefaultUserPage.xaml"/>
-                <ResourceDictionary Source="Views/AdminPage.xaml"/>
-                <ResourceDictionary Source="Views/SlotMinesPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/LogInPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/DefaultUserPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/AdminPage.xaml"/>
+                <ResourceDictionary Source="Views/SlotPages/SlotMinesPage.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -4,7 +4,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels">
     
     <DataTemplate DataType="{x:Type vm:AdminViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:AdminViewModel}">

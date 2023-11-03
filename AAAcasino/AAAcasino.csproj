@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Infrastructure\Commands\ClientCommands\" />
+    <Folder Include="Infrastructure\Commands\SlotCommands\" />
   </ItemGroup>
 
 </Project>

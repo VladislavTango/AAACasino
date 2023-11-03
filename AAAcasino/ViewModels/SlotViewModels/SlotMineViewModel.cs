@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows;
 using System;
 
-namespace AAAcasino.ViewModels
+namespace AAAcasino.ViewModels.SlotViewModels
 {
     internal class SlotMineViewModel : ViewModel, IPageViewModel
     {
@@ -19,6 +19,11 @@ namespace AAAcasino.ViewModels
 
         public void SetAnyModel(object? model)
         {
+            Buttons = CreateButtons(Buttons);
+            Buttons2 = CreateButtons(Buttons2);
+            Buttons3 = CreateButtons(Buttons3);
+            Buttons4 = CreateButtons(Buttons4);
+            Buttons5 = CreateButtons(Buttons5);
             balanse = $"Баланс: {MainViewModel.User.Balance}";
         }
         #endregion
@@ -75,7 +80,7 @@ namespace AAAcasino.ViewModels
             if (str.Last() == '-') return str.Remove(str.Length - 1);
             try
             {
-                if (!Char.IsDigit(str, str.Length - 1))
+                if (!char.IsDigit(str, str.Length - 1))
                 {
                     if (str.Last() == '.' || str.Last() == ',')
                     {
@@ -99,11 +104,11 @@ namespace AAAcasino.ViewModels
         {
             ColorChange = new LamdaCommand(OnColorChangeCommand, CanColorChangeCommand);
             Start = new LamdaCommand(OnStartCommand, CanStartCommand);
-            Buttons = CreateButtons(Buttons);
-            Buttons2 = CreateButtons(Buttons2);
-            Buttons3 = CreateButtons(Buttons3);
-            Buttons4 = CreateButtons(Buttons4);
-            Buttons5 = CreateButtons(Buttons5);
+            //    Buttons = CreateButtons(Buttons);
+            //    Buttons2 = CreateButtons(Buttons2);
+            //    Buttons3 = CreateButtons(Buttons3);
+            //    Buttons4 = CreateButtons(Buttons4);
+            //    Buttons5 = CreateButtons(Buttons5);
             Stop = new LamdaCommand(OnStopCommand, CanStopCommand);
         }
 
@@ -156,10 +161,10 @@ namespace AAAcasino.ViewModels
                     if (field[num] == false)
                         GameStarted = false;
                     #endregion
-                    ThisMn += Math.Round((((Bombs) * 0.2) + 0.1), 2);
-                    NextMn = ThisMn + Math.Round((((Bombs) * 0.2) + 0.1), 2);
+                    ThisMn += Math.Round(Bombs * 0.2 + 0.1, 2);
+                    NextMn = ThisMn + Math.Round(Bombs * 0.2 + 0.1, 2);
                     Mn = $"Множитель={Math.Round(ThisMn, 2)}X";
-                    NMn = $"Следующий множитель={Math.Round((NextMn), 2)}X";
+                    NMn = $"Следующий множитель={Math.Round(NextMn, 2)}X";
                     BWin = $"Баланс после выйгрыша:{Math.Round(Convert.ToDouble(Bid) * ThisMn + MainViewModel.User.Balance, 2)}";
                     NBid = $"следующего результат:{Math.Round(Convert.ToDouble(Bid) * NextMn + MainViewModel.User.Balance, 2)}";
                 }

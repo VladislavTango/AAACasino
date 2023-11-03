@@ -1,7 +1,7 @@
 ﻿using AAAcasino.ViewModels.Base;
 using System.Windows.Navigation;
 
-namespace AAAcasino.ViewModels
+namespace AAAcasino.ViewModels.ClientViewModels
 {
     internal class AdminViewModel : ViewModel, IPageViewModel
     {

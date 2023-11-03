@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace AAAcasino.ViewModels
+namespace AAAcasino.ViewModels.ClientViewModels
 {
     class LogInViewModel : ViewModel, IPageViewModel
     {
@@ -44,7 +44,7 @@ namespace AAAcasino.ViewModels
         #region commands
         private bool СheckСondition()
         {
-            if ((_name.Length < 4 || _pass.Length < 4))
+            if (_name.Length < 4 || _pass.Length < 4)
             {
                 MessengeLine = "Имя пользователя и пароль должны быть больше 4 символов";
                 return false;
@@ -79,7 +79,7 @@ namespace AAAcasino.ViewModels
                 MainViewModel.User = new UserModel(_name, _pass);
                 MainViewModel.User.Balance = 100.0d;
                 MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
-               // MainViewModel.SelectedPageViewModel = MainViewModel.SlotPageViewModels[(int)NumberSlotPage.MINESLOT_PAGE];
+                MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
                 MainWindowViewModel.applicationContext.Add(MainViewModel.User);
                 MainWindowViewModel.applicationContext.SaveChanges();
             }

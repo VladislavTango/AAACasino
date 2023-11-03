@@ -2,6 +2,8 @@
 using AAAcasino.ViewModels;
 using System.Collections.Generic;
 using System.Windows;
+using AAAcasino.ViewModels.SlotViewModels;
+using AAAcasino.ViewModels.ClientViewModels;
 
 namespace AAAcasino
 {
