@@ -12,8 +12,6 @@ namespace AAAcasino.ViewModels
     {
         LOGIN_PAGE = 0,
         PROFILE_PAGE = 1,
-       // QUIZES_PAGE = 2,
-       // CURRENT_QUIZ_PAGE = 3,
         ADMIN_PAGE = 2,
     }
     internal class MainWindowViewModel : ViewModel
@@ -57,6 +55,7 @@ namespace AAAcasino.ViewModels
         private void OnInitCommand(object parameter)
         {
             SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.LOGIN_PAGE];
+            SelectedPageViewModel.MainViewModel = this;
             _init = false;
             ImgVis = Visibility.Collapsed;
         }

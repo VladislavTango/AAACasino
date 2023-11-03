@@ -77,8 +77,9 @@ namespace AAAcasino.ViewModels
             else
             {
                 MainViewModel.User = new UserModel(_name, _pass);
-                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[1]; // Вместо 1 enum
-                MainWindowViewModel.applicationContext.Update(MainViewModel.User);
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.LOGIN_PAGE]; // Вместо 1 enum
+                MainWindowViewModel.applicationContext.Add(MainViewModel.User);
+                MainWindowViewModel.applicationContext.SaveChanges();
             }
         }
         private bool CanSignUpCommand(object parameter) => true;
