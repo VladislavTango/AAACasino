@@ -3,7 +3,7 @@ using AAAcasino.ViewModels.Base;
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace AAAcasino.ViewModels.ClientViewModels
+namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
 {
     internal class DefaultUserViewModel : ViewModel, IPageViewModel
     {
@@ -27,7 +27,7 @@ namespace AAAcasino.ViewModels.ClientViewModels
         private bool CanProfileOpenCommand(object parameter) => true;
         private void OnProfileOpenCommand(object parameter)
         {
-            SelectedPageViewModel = MainViewModel.SlotPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
+            SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
             SelectedPageViewModel.MainViewModel = MainViewModel;
         }
         #endregion

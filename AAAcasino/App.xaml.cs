@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Windows;
 using AAAcasino.ViewModels.SlotViewModels;
 using AAAcasino.ViewModels.ClientViewModels;
+using AAAcasino.ViewModels.ClientViewModels.AdminViewModels;
+using AAAcasino.ViewModels.ClientViewModels.UserViewModels;
 
 namespace AAAcasino
 {
@@ -21,7 +23,8 @@ namespace AAAcasino
                     {
                         new LogInViewModel(),
                         new DefaultUserViewModel(),
-                        new AdminViewModel()
+                        new AdminViewModel(),
+                        new ProfileViewModel()
                     },
                     SlotPageViewModels = new List<IPageViewModel>
                     {
