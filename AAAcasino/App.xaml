@@ -8,7 +8,7 @@
                 <ResourceDictionary Source="Views/ClientPages/LogInPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/DefaultUserPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/ProfilePage.xaml"/>
-                <ResourceDictionary Source="Views/ClientPages/AdminViews/AdminPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/AdminViews/MainAdminPage.xaml"/>
                 <ResourceDictionary Source="Views/SlotPages/SlotMinesPage.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
