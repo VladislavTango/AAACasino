@@ -53,8 +53,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         }
         #endregion
         #region Quizes tab
-        private QuizModel _quizCurrent = new QuizModel();
-        public QuizModel QuizCurrent
+        private QuizModel? _quizCurrent = new QuizModel();
+        public QuizModel? QuizCurrent
         {
             get => _quizCurrent;
             set => Set(ref _quizCurrent, value);
@@ -100,6 +100,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             MainViewModel.SelectedPageViewModel.SetAnyModel(QuizCurrent);
         }
         public bool CanAddQuizCommand(object parameter) => true;
+        
         #endregion
         #endregion
         public AdminViewModel()

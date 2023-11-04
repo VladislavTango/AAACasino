@@ -24,11 +24,5 @@ namespace AAAcasino.Models
             get => _answers;
             set => Set(ref _answers, value);
         }
-        private ushort _correctAnswerNumber;
-        public ushort correctAnswerNumber
-        {
-            get => _correctAnswerNumber; 
-            set => Set(ref _correctAnswerNumber, value);
-        }
     }
 }

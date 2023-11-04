@@ -24,7 +24,8 @@ namespace AAAcasino
                         new LogInViewModel(),
                         new DefaultUserViewModel(),
                         new AdminViewModel(),
-                        new ProfileViewModel()
+                        new ProfileViewModel(),
+                        new CreationQuizViewModel(),
                     },
                     SlotPageViewModels = new List<IPageViewModel>
                     {

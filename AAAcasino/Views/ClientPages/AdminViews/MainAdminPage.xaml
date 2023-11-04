@@ -55,9 +55,10 @@
                         <Label Content="Викторины"/>
                     </TabItem.Header>
                     <TabItem.Content>
-                        <DataGrid ItemsSource="{Binding QuizListIsOpen}">
+                        <Grid>
+                            <Button Content="Add" Command="{Binding AddQuizCommand}" MaxHeight="25" MaxWidth="50"/>
                             
-                        </DataGrid>
+                        </Grid>
                     </TabItem.Content>
                 </TabItem>
             </TabControl>

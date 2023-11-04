@@ -16,5 +16,13 @@ namespace AAAcasino.Models
             get => _str;
             set => Set(ref _str, value);
         }
+
+        private bool _correctness = false;
+        public bool IsCorrect
+        {
+            get => _correctness;
+            set => Set(ref _correctness, value);
+        }
+
     }
 }
