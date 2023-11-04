@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
+namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels //test merge
 {
     internal class CreationQuizViewModel : ViewModel, IPageViewModel
     {
