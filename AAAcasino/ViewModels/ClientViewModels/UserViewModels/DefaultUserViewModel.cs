@@ -27,7 +27,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         private bool CanProfileOpenCommand(object parameter) => true;
         private void OnProfileOpenCommand(object parameter)
         {
-            SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
+            SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
             SelectedPageViewModel.MainViewModel = MainViewModel;
         }
         #endregion

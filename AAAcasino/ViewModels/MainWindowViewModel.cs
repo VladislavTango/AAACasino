@@ -48,7 +48,7 @@ namespace AAAcasino.ViewModels
         public string Title => $"{SelectedPageViewModel?.Title}";
         #endregion
 
-        private UserModel? _user = null;
+        private UserModel? _user = new UserModel(string.Empty, string.Empty);
         public UserModel? User
         {
             get => _user;

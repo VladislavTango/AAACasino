@@ -58,6 +58,11 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels //test merge
         }
         private bool CanSaveQuizCommand(object parameter) => (QuizModel.Name != "" && QuizModel.Name != null);
         public ICommand AddAnswerCommand { get; set; }
+        private void OnAddAnswerCommand(object parameter)
+        {
+
+        }
+        private bool CanAddAnswerCommand(object parameter) => true;
         #endregion
         public CreationQuizViewModel()
         {
