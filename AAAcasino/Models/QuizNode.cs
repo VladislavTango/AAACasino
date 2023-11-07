@@ -1,6 +1,7 @@
 ﻿using AAAcasino.ViewModels.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace AAAcasino.Models
 {

@@ -4,7 +4,8 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.AdminViewModels">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.AdminViewModels"
+                    xmlns:components ="clr-namespace:AAAcasino.Components">
 
     <DataTemplate DataType="{x:Type vm:CreationQuizViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:CreationQuizViewModel}">
@@ -16,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
             <TextBox Text="{Binding QuizModel.Name}" Grid.Column="0" Grid.Row="0"/>
@@ -24,14 +26,22 @@
                 <Button Content="Add" Command="{Binding AddQuizNodeCommand}"/>
                 <Button Content="Save" Command="{Binding SaveQuizCommand}"/>
             </StackPanel>
-            <ListBox ItemsSource="{Binding QuizModel.QuizNodes}" Grid.ColumnSpan="3" Grid.Row="1">
+            <WrapPanel Grid.Row="2">
+                <TextBox Text="{Binding AnswStr}" MinWidth="200"/>
+                <Button Content="Add Answer" Command="{Binding AddAnswerCommand}"/>
+            </WrapPanel>
+            <ListBox ItemsSource="{Binding QuizModel.QuizNodes}" 
+                     Grid.ColumnSpan="3" Grid.Row="1" 
+                     SelectedIndex="{Binding SelectQuestIndex}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <TextBlock Text="{Binding Question}"/>
-                            <Button/>
-                            <Expander Header="Ответы">
-                                <ListBox ItemsSource="{Binding Answers}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Question}" Grid.Row="0"/>
+                            <ListBox ItemsSource="{Binding Answers}" Grid.Row="1">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <WrapPanel>
@@ -40,8 +50,7 @@
                                             </WrapPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Expander>
+                            </ListBox>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

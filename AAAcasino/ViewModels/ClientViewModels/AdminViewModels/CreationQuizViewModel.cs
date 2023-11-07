@@ -3,11 +3,13 @@ using AAAcasino.Models;
 using AAAcasino.ViewModels.Base;
 using Microsoft.Identity.Client;
 using System.CodeDom;
+using System.IO.Packaging;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
-namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels //test merge
+namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
 {
     internal class CreationQuizViewModel : ViewModel, IPageViewModel
     {
@@ -31,6 +33,19 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels //test merge
             get => _quest;
             set => Set(ref _quest, value);
         }
+        private string? _answStr;
+        public string AnswStr
+        {
+            get => _answStr;
+            set => Set(ref _answStr, value);
+        }
+
+        private int? _selectQuestIndex = null;
+        public int? SelectQuestIndex
+        {
+            get => _selectQuestIndex;
+            set => Set(ref _selectQuestIndex, value);
+        }
         #region command
         public ICommand AddQuizNodeCommand { get; set; }
         private void OnAddQuizNodeCommand(object param)
@@ -52,6 +67,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels //test merge
                     MainWindowViewModel.applicationContext.Update(QuizModel);
                 else
                     MainWindowViewModel.applicationContext.Add(QuizModel);
+
                 MainWindowViewModel.applicationContext.SaveChanges();
             });
             MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
@@ -60,14 +76,19 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels //test merge
         public ICommand AddAnswerCommand { get; set; }
         private void OnAddAnswerCommand(object parameter)
         {
-
+            if (_selectQuestIndex != null)
+            {
+                _quizModel.QuizNodes[(int)_selectQuestIndex].Answers.Add(new Answer(AnswStr));
+                AnswStr = string.Empty;
+            }
         }
-        private bool CanAddAnswerCommand(object parameter) => true;
+        private bool CanAddAnswerCommand(object parameter) => AnswStr != "";
         #endregion
         public CreationQuizViewModel()
         {
             AddQuizNodeCommand = new LamdaCommand(OnAddQuizNodeCommand, CanAddQuizNodeCommand);
             SaveQuizCommand = new LamdaCommand(OnSaveQuizCommand, CanSaveQuizCommand);
+            AddAnswerCommand = new LamdaCommand(OnAddAnswerCommand, CanAddAnswerCommand);
         }
     }
 }

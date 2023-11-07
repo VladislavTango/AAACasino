@@ -23,6 +23,9 @@ namespace AAAcasino.Models
             get => _correctness;
             set => Set(ref _correctness, value);
         }
-
+        public Answer(string str)
+        {
+            Str = str;
+        }
     }
 }
