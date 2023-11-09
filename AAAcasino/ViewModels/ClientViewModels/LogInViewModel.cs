@@ -64,6 +64,7 @@ namespace AAAcasino.ViewModels.ClientViewModels
                 MainViewModel.SelectedPageViewModel = user.DefalutUser ?
                     MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE] :
                     MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
+                MainViewModel.SelectedPageViewModel.SetAnyModel(null);
             }
         }
         private bool CanLogInCommand(object parameter) => true;
@@ -78,8 +79,9 @@ namespace AAAcasino.ViewModels.ClientViewModels
             {
                 MainViewModel.User = new UserModel(_name, _pass);
                 MainViewModel.User.Balance = 100.0d;
-                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
                 MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
+                MainViewModel.SelectedPageViewModel.SetAnyModel(null);
                 MainWindowViewModel.applicationContext.Add(MainViewModel.User);
                 MainWindowViewModel.applicationContext.SaveChanges();
             }

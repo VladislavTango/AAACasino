@@ -46,7 +46,7 @@ namespace AAAcasino.Models
         {
             _username = username;
             _password = password;
-            _balance = 1000;
+            _balance = 50;
             _history = new HistoryModel();
         }
     }

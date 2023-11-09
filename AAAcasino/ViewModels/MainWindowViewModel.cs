@@ -12,9 +12,11 @@ namespace AAAcasino.ViewModels
     {
         LOGIN_PAGE = 0,
         USER_PAGE = 1,
-        ADMIN_PAGE = 2,
-        PROFILE_PAGE = 3,
-        CREATION_PANEL_PAGE = 4,
+        PROFILE_PAGE = 2,
+        QUIZZES_PAGE = 3,
+        SLOTS_PAGE = 4,
+        ADMIN_PAGE = 5,
+        CREATION_PANEL_PAGE = 6,
     }
     enum NumberSlotPage
     {

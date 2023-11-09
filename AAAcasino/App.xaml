@@ -8,6 +8,8 @@
                 <ResourceDictionary Source="Views/ClientPages/LogInPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/DefaultUserPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/ProfilePage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/UserViews/QuizzesPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/UserViews/SlotsPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/AdminViews/MainAdminPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/AdminViews/CreationQuizPage.xaml"/>
                 <ResourceDictionary Source="Views/SlotPages/SlotMinesPage.xaml"/>

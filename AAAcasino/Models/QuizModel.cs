@@ -20,6 +20,13 @@ namespace AAAcasino.Models
             set => Set(ref _name, value);
         }
 
+        private int _reward = 0;
+        public int Reward
+        {
+            get => _reward;
+            set => Set(ref _reward, value); 
+        }
+
         private ObservableCollection<QuizNode> _quizNodes = new ObservableCollection<QuizNode>();
         public ObservableCollection<QuizNode> QuizNodes { get => _quizNodes; }
         public void AddQuizNode(QuizNode node) { _quizNodes.Add(node); }
