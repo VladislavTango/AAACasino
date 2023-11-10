@@ -5,8 +5,8 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
                     xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
-    <DataTemplate DataType="{x:Type vm:DefaultUserViewModel}">
-        <Grid d:DataContext="{d:DesignInstance vm:DefaultUserViewModel}">
+    <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
+        <Grid d:DataContext="{d:DesignInstance vm:ProfileViewModel}">
             <Label Content="ProfilePage" FontSize="24"/>
         </Grid>
     </DataTemplate>

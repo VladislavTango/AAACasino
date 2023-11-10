@@ -6,8 +6,8 @@
                     mc:Ignorable="d"
                     xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
     
-    <DataTemplate DataType="{x:Type vm:DefaultUserViewModel}">
-        <Grid d:DataContext="{d:DesignInstance vm:DefaultUserViewModel}">
+    <DataTemplate DataType="{x:Type vm:SlotsViewModel}">
+        <Grid d:DataContext="{d:DesignInstance vm:SlotsViewModel}">
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
