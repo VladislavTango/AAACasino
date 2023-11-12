@@ -1,31 +1,29 @@
 ﻿using AAAcasino.Models;
 using AAAcasino.ViewModels.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
 {
     internal class SelectedQuizViewModel : ViewModel, IPageViewModel
     {
         #region IPage
-        public string Title => $"{QuizModel.Name}";
+        public string Title => $"Викторина";
         public MainWindowViewModel MainViewModel { get; set; } = null!;
         public void SetAnyModel(object? model)
         {
             try
             {
                 QuizModel = model != null ? (QuizModel)model : throw new ArgumentNullException(nameof(model));
-                _userAnsswers = new List<int>(new int[_quizModel.QuizNodes.Count]);
+                CurrentQuestion = QuizModel.QuizNodes[0];
             }
             catch
             {
-                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.QUIZZES_PAGE];
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
             }
         }
         #endregion
+        #region Fields
         private QuizModel _quizModel;
         public QuizModel QuizModel
         {
@@ -33,8 +31,27 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
             set => Set(ref _quizModel, value);
         }
 
-        private int _questNumber = 0;
+        private QuizNode _currentQuestion = null!;
+        public QuizNode CurrentQuestion
+        {
+            get => _currentQuestion;
+            set => Set(ref _currentQuestion, value);
+        }
 
-        private List<int> _userAnsswers = null!;
+        private int _questionNumber = 0;
+        #endregion
+        #region Commands
+        public ICommand SendAnsweCommand { get; set; }
+        private void OnSendAnswerCommand(object param)
+        {
+            if(_questionNumber < QuizModel.QuizNodes.Count - 1)
+            {
+                QuizModel.QuizNodes[_questionNumber] = CurrentQuestion;
+                _questionNumber++;
+                CurrentQuestion = QuizModel.QuizNodes[_questionNumber];
+            }
+        }
+        private bool CanSendAnswerCommand(object param) => true;
+        #endregion
     }
 }

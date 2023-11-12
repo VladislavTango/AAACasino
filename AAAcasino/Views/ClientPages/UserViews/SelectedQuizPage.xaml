@@ -8,6 +8,24 @@
 
     <DataTemplate DataType="{x:Type vm:SelectedQuizViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:SelectedQuizViewModel}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.25*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Content="{Binding CurrentQuestion.Question}" Grid.Row="0"/>
+            <ListBox ItemsSource="{Binding CurrentQuestion.Answers}" Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Str}"/>
+                            <CheckBox IsChecked="{Binding UserAnswer}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Content="Ответить" Command="{Binding SendAnsweCommand}"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

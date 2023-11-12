@@ -13,7 +13,7 @@ namespace AAAcasino.Services.Database
         }
         public ApplicationContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }

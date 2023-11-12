@@ -16,7 +16,10 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Button>
+                        <Button Command="{Binding Path=DataContext.GoToQuizCommand, 
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, 
+                            UpdateSourceTrigger=Default}" 
+                                CommandParameter="{Binding}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.RowDefinitions>

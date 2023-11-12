@@ -1,4 +1,5 @@
-﻿using AAAcasino.Models;
+﻿using AAAcasino.Infrastructure.Commands;
+using AAAcasino.Models;
 using AAAcasino.ViewModels.Base;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,10 +25,17 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         }
         #region Commands
         public ICommand GoToQuizCommand { get; set; }
-        private void OnGoToQuizCommand(QuizModel quiz) 
+        private void OnGoToQuizCommand(object quiz) 
         {
-            
+            MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.SELECTED_QUIZ_PAGE];
+            MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
+            MainViewModel.SelectedPageViewModel.SetAnyModel(quiz);
         }
+        private bool CanGoToQuizCommand(object quiz) => true;
         #endregion
+        public QuizzesViewModel()
+        {
+            GoToQuizCommand = new LamdaCommand(OnGoToQuizCommand, CanGoToQuizCommand);
+        }
     }
 }
