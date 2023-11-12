@@ -25,7 +25,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Ответить" Command="{Binding SendAnsweCommand}"/>
+            <Button Content="Ответить" Command="{Binding SendAnsweCommand}" Grid.Row="2"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

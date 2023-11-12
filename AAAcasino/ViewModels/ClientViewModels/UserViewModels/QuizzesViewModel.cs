@@ -1,8 +1,10 @@
 ﻿using AAAcasino.Infrastructure.Commands;
 using AAAcasino.Models;
 using AAAcasino.ViewModels.Base;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
@@ -14,7 +16,10 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         public MainWindowViewModel MainViewModel { get; set; }
         public void SetAnyModel(object? model) 
         {
-            QuizModels = new ObservableCollection<QuizModel>(MainWindowViewModel.applicationContext.quizModels.ToList());
+            QuizModels = new ObservableCollection<QuizModel>
+                (MainWindowViewModel.applicationContext.quizModels
+                .Include(qm => qm.QuizNodes)
+                .ThenInclude(qn => qn.Answers).ToList());
         }
         #endregion
         private ObservableCollection<QuizModel>? _quizModels = null;

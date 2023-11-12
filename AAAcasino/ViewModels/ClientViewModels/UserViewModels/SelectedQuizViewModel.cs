@@ -1,4 +1,5 @@
-﻿using AAAcasino.Models;
+﻿using AAAcasino.Infrastructure.Commands;
+using AAAcasino.Models;
 using AAAcasino.ViewModels.Base;
 using System;
 using System.Windows.Input;
@@ -53,5 +54,9 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         }
         private bool CanSendAnswerCommand(object param) => true;
         #endregion
+        public SelectedQuizViewModel()
+        {
+            SendAnsweCommand = new LamdaCommand(OnSendAnswerCommand, CanSendAnswerCommand);
+        }
     }
 }
