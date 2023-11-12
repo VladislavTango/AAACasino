@@ -13,7 +13,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.2*"/>
                     </Grid.ColumnDefinitions>
                     <Button Command="{Binding SwitchToProfileCommand}" Content="ПРОФИЛЬ"
                 Grid.Column="0"/>

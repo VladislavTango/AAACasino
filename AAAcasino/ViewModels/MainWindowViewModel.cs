@@ -3,6 +3,7 @@ using AAAcasino.Models;
 using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 

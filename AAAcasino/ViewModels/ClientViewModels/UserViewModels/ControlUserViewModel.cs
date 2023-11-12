@@ -47,6 +47,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         private void OnSwitchToQuizzesCommand(object parameter)
         {
             UserSelectedPage = MainViewModel.ClientPageViewModels[(int)NumberClientPage.QUIZZES_PAGE];
+            UserSelectedPage.SetAnyModel(null);
             UserSelectedPage.MainViewModel = MainViewModel;
         }
         private bool CanSwitchToQuizzesCommand(object parameter)

@@ -26,6 +26,7 @@ namespace AAAcasino
                         new ProfileViewModel(),
                         new QuizzesViewModel(),
                         new SlotsViewModel(),
+                        new SelectedQuizViewModel(),
                         new AdminViewModel(),
                         new CreationQuizViewModel(),
                     },

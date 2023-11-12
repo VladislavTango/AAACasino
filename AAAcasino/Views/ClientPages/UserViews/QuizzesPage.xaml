@@ -8,6 +8,29 @@
     
     <DataTemplate DataType="{x:Type vm:QuizzesViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:QuizzesViewModel}">
+            <ListBox ItemsSource="{Binding QuizModels}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Button>
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="{Binding Name}"/>
+                                    <Label Content="{Binding Reward}"/>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </DataTemplate>
 
