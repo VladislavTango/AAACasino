@@ -17,17 +17,13 @@
                 </WrapPanel>
                 <WrapPanel Margin="0 10 0 0">
                     <Label Content="Пароль"/>
-                    <components:BinablePasswordBox Password="{Binding Pass}"
-                             Margin="15 0 0 0" MinWidth="200"/>
-                </WrapPanel>
-                <WrapPanel Visibility="Collapsed">
-                    <Label Content="Пароль"/>
-                    <components:BinablePasswordBox Password="{Binding PassSec}"
-                             Margin="15 0 0 0" MinWidth="200"/>
+                    <PasswordBox Name="PassBox" Margin="15 0 0 0" MinWidth="200"/>
                 </WrapPanel>
                 <WrapPanel>
-                    <Button Command="{Binding SignUpCommand}" Content="SignUp"/>
-                    <Button Command="{Binding LogInCommand}" Content="LogIn"/>
+                    <Button Command="{Binding SignUpCommand}" Content="SignUp"
+                            CommandParameter="{Binding ElementName=PassBox}"/>
+                    <Button Command="{Binding LogInCommand}" Content="LogIn"
+                            CommandParameter="{Binding ElementName=PassBox}"/>
                 </WrapPanel>
             </StackPanel>
         </Grid>

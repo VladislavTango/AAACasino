@@ -2,6 +2,7 @@
 using AAAcasino.Models;
 using AAAcasino.ViewModels.Base;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
@@ -50,6 +51,35 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
                 QuizModel.QuizNodes[_questionNumber] = CurrentQuestion;
                 _questionNumber++;
                 CurrentQuestion = QuizModel.QuizNodes[_questionNumber];
+            }
+            else
+            {
+                bool fullRight = true;
+                foreach (var item in QuizModel.QuizNodes)
+                {
+                    foreach (var answ in item.Answers)
+                    {
+                        if (answ.UserAnswer != answ.IsCorrect)
+                        {
+                            fullRight = false;
+                            break;
+                        }
+                    }
+                    if (!fullRight)
+                        break;
+                }
+                if (fullRight)
+                {
+                    // не апдейтает юзера в бд
+                    double reward = QuizModel.Reward;
+                    Task.Run(() =>
+                    {
+                        MainViewModel.User.Balance += reward;
+                        MainWindowViewModel.applicationContext.userModels.Update(MainViewModel.User);
+                        MainWindowViewModel.applicationContext.SaveChanges();
+                    });
+                }
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
             }
         }
         private bool CanSendAnswerCommand(object param) => true;
