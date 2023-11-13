@@ -41,7 +41,7 @@ namespace AAAcasino.ViewModels.ClientViewModels
             {
                 MainViewModel.User = user;
                 MainViewModel.SelectedPageViewModel = user.DefalutUser ?
-                    MainViewModel.SlotPageViewModels[(int)NumberSlotPage.ROULETTE_PAGE] :
+                    MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE] :
                     MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
                 MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
                 MainViewModel.SelectedPageViewModel.SetAnyModel(null);
