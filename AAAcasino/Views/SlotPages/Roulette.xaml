@@ -1,0 +1,224 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    mc:Ignorable="d"
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.SlotViewModels">
+    <DataTemplate DataType="{x:Type vm:RouletteViewModel}">
+        <Grid d:DataContext="{d:DesignInstance vm:RouletteViewModel}">
+            <Grid ShowGridLines="true">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="2" ShowGridLines="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" ShowGridLines="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Ставка" HorizontalAlignment="Center" FontSize="36" Grid.Row="0"/>
+                        <TextBox Text="{Binding Bid,UpdateSourceTrigger=PropertyChanged}" FontSize="36" Grid.Row="1"/>
+                        <TextBlock Text="{Binding balance,UpdateSourceTrigger=PropertyChanged}" FontSize="36" Grid.Row="2"/>
+                        <TextBlock Text="{Binding TotalBet,UpdateSourceTrigger=PropertyChanged}" FontSize="36" Grid.Row="3"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="8*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" HorizontalAlignment="Center" Content="Правила" FontSize="30"/>
+                        <ListBox Grid.Row="1" FontSize="20">
+                            <ListBoxItem Content="ставка на число 35х"/>
+                            <ListBoxItem Content="ставка на 12 чисел 3х"/>
+                            <ListBoxItem Content="ставка EVEN(7-12) 6х"/>
+                            <ListBoxItem Content="ставка ODD(25-30) 6х"/>
+                            <ListBoxItem Content="ставка 1-18 2х"/>
+                            <ListBoxItem Content="ставка 19-36 2х"/>
+                            <ListBoxItem Content="ставка на красное или чёрное 2х"/>
+                            <ListBoxItem Content="ставка на зеленое 50х"/>
+                        </ListBox>
+
+
+                    </Grid>
+                    <Grid Grid.Column="2" ShowGridLines="true">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="6*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="ваши ставки" FontSize="30" HorizontalAlignment="Center"/>
+                        <ListBox Grid.Row="1" FontSize="20" ItemsSource="{Binding BidList}" SelectedIndex="{Binding selectedIndex, UpdateSourceTrigger=PropertyChanged}">
+                        </ListBox>
+                        <Button Content="удалить выделенную ставку" Grid.Row="2" Command="{Binding DeleteSelectedItem}"/>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Grid.Column="0" Background="{Binding color_1}">
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding number_1,UpdateSourceTrigger=PropertyChanged}"
+                                   Foreground="White" FontSize="54" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        </GroupBox>
+                        <GroupBox Grid.Column="1" Background="{Binding color_2}">
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding number_2,UpdateSourceTrigger=PropertyChanged}"
+                                   Foreground="White" FontSize="54" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        </GroupBox>
+                        <GroupBox Grid.Column="2" Background="{Binding color_3}">
+                            <Grid ShowGridLines="false">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1" Panel.ZIndex="555" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                       Content="▲" FontSize="36" Padding="0,0,0,0" Foreground="Gray" />
+                                <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="{Binding number_3,UpdateSourceTrigger=PropertyChanged}"
+                                   Foreground="White" FontSize="54" TextAlignment="Center"  VerticalAlignment="Center" Grid.RowSpan="2"/>
+
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Column="3" Background="{Binding color_4}">
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding number_4,UpdateSourceTrigger=PropertyChanged}"
+                                   Foreground="White" FontSize="54" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        </GroupBox>
+                        <GroupBox Grid.Column="4" Background="{Binding color_5}">
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding number_5,UpdateSourceTrigger=PropertyChanged}"
+                                   Foreground="White" FontSize="54" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        </GroupBox>
+                    </Grid>
+                    <Grid Grid.Row="1" ShowGridLines="false">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Grid.Row="2" Content="start" Command="{Binding Start}"/>
+                    </Grid>
+                </Grid>
+                <Label Grid.Row="0" Content="Рулетка" HorizontalAlignment="Center" FontSize="20" FontWeight="Black"  VerticalAlignment="Center"  />
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Content="0" FontSize="70" Foreground="white" Background="Green"
+                            CommandParameter="0" Command="{Binding btn}"/>
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding Buttons}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Rows="3" Columns="12" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Text}" Command="{Binding Command}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Grid Grid.Row="1" Grid.Column="1" ShowGridLines="false">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!--#region 1st12 1to18 even||46 47 48-->
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="1 st 12" FontSize="30" Background="SeaGreen" 
+                                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" CommandParameter="46" Command="{Binding btn}"/>
+                            <Button Content="1 to 18" FontSize="20" Background="SeaGreen" 
+                                Grid.Column="0" Grid.Row="1"  Foreground="White" CommandParameter="47" Command="{Binding btn}"/>
+                            <Button Content="EVEN" FontSize="20" Background="SeaGreen" 
+                                Grid.Column="1" Grid.Row="1"  Foreground="White" CommandParameter="48" Command="{Binding btn}"/>
+                        </Grid>
+                        <!--#endregion-->
+                        <!--#region 2nd12 red black || 43 44 45-->
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="2 nd 12" FontSize="30" Background="SeaGreen" 
+                                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" CommandParameter="43" Command="{Binding btn}"/>
+                            <Button FontSize="20" Background="Red" 
+                                Grid.Column="0" Grid.Row="1"  CommandParameter="44" Foreground="White" Command="{Binding btn}"/>
+                            <Button  FontSize="20" Background="Black" 
+                                Grid.Column="1" Grid.Row="1" CommandParameter="45" Foreground="White" Command="{Binding btn}"/>
+                        </Grid>
+                        <!--#endregion-->
+                        <!--#region 3rd12 ODD 19-36 || 40 41 42-->
+                        <Grid Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="3 rd 12" FontSize="30" Background="SeaGreen" 
+                                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" CommandParameter="40" Command="{Binding btn}"/>
+                            <Button Content="ODD" FontSize="20" Background="SeaGreen" 
+                                Grid.Column="0" Grid.Row="1"  Foreground="White" CommandParameter="41" Command="{Binding btn}"/>
+                            <Button Content="19 to 36" FontSize="20" Background="SeaGreen" 
+                                Grid.Column="1" Grid.Row="1"  Foreground="White" CommandParameter="42" Command="{Binding btn}"/>
+                        </Grid>
+                        <!--#endregion-->
+                    </Grid>
+                    <!--#region 2 to 1 37 38 39 -->
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Foreground="White" Background="SeaGreen" FontSize="50" Content="2 to 1" Command="{Binding btn}" CommandParameter="37"/>
+                        <Button Grid.Row="1" Foreground="White" Background="SeaGreen" FontSize="50" Content="2 to 1" Command="{Binding btn}" CommandParameter="38"/>
+                        <Button Grid.Row="2" Foreground="White" Background="SeaGreen" FontSize="50" Content="2 to 1" Command="{Binding btn}" CommandParameter="39"/>
+                    </Grid>
+                    <!--#endregion-->
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
