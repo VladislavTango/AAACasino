@@ -40,11 +40,18 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             set => Set(ref _answStr, value);
         }
 
-        private int? _selectQuestIndex = null;
-        public int? SelectQuestIndex
+        private QuizNode? _selectedQuest = null;
+        public QuizNode? SelectedQuest
         {
-            get => _selectQuestIndex;
-            set => Set(ref _selectQuestIndex, value);
+            get => _selectedQuest;
+            set => Set(ref _selectedQuest, value);
+        }
+
+        private Answer _selectedAnswer = new Answer(null);
+        public Answer SelectedAnswer
+        {
+            get => _selectedAnswer;
+            set => Set(ref _selectedAnswer, value);
         }
         #region command
         public ICommand AddQuizNodeCommand { get; set; }
@@ -76,19 +83,35 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         public ICommand AddAnswerCommand { get; set; }
         private void OnAddAnswerCommand(object parameter)
         {
-            if (_selectQuestIndex != null)
+            if (_selectedQuest != null)
             {
-                _quizModel.QuizNodes[(int)_selectQuestIndex].Answers.Add(new Answer(AnswStr));
+                _selectedQuest.Answers.Add(new Answer(AnswStr));
                 AnswStr = string.Empty;
             }
         }
         private bool CanAddAnswerCommand(object parameter) => AnswStr != "";
+        public ICommand RemoveQuizNodeCommand { get; set; }
+        private void OnRemoveQuizNodeCommand(object parameter)
+        {
+                _quizModel.QuizNodes.Remove(SelectedQuest);
+                AnswStr = string.Empty;
+                Quest = string.Empty;
+        }
+        private bool CanRemoveQuizNodeCommand(object parameter) => _selectedQuest != null;
+        public ICommand RemoveAnswerCommand { get; set; }
+        private void OnRemoveAnswerCommand(object parameter)
+        {
+            _selectedQuest.Answers.Remove(_selectedAnswer);
+        }
+        private bool CanRemoveAnswerCommand(object parameter) => _selectedAnswer != null && _selectedQuest != null;
         #endregion
         public CreationQuizViewModel()
         {
             AddQuizNodeCommand = new LamdaCommand(OnAddQuizNodeCommand, CanAddQuizNodeCommand);
             SaveQuizCommand = new LamdaCommand(OnSaveQuizCommand, CanSaveQuizCommand);
             AddAnswerCommand = new LamdaCommand(OnAddAnswerCommand, CanAddAnswerCommand);
+            RemoveQuizNodeCommand = new LamdaCommand(OnRemoveQuizNodeCommand, CanRemoveQuizNodeCommand);
+            RemoveAnswerCommand = new LamdaCommand(OnRemoveAnswerCommand, CanRemoveAnswerCommand);
         }
     }
 }

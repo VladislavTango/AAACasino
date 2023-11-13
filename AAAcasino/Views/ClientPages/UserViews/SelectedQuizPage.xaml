@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    mc:Ignorable="d"
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
+
+    <DataTemplate DataType="{x:Type vm:SelectedQuizViewModel}">
+        <Grid d:DataContext="{d:DesignInstance vm:SelectedQuizViewModel}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.25*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Content="{Binding CurrentQuestion.Question}" Grid.Row="0"/>
+            <ListBox ItemsSource="{Binding CurrentQuestion.Answers}" Grid.Row="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Str}"/>
+                            <CheckBox IsChecked="{Binding UserAnswer}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Content="Ответить" Command="{Binding SendAnsweCommand}" Grid.Row="2"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

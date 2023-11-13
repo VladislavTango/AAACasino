@@ -3,6 +3,7 @@ using AAAcasino.Models;
 using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -12,9 +13,12 @@ namespace AAAcasino.ViewModels
     {
         LOGIN_PAGE = 0,
         USER_PAGE = 1,
-        ADMIN_PAGE = 2,
-        PROFILE_PAGE = 3,
-        CREATION_PANEL_PAGE = 4,
+        PROFILE_PAGE = 2,
+        QUIZZES_PAGE = 3,
+        SLOTS_PAGE = 4,
+        SELECTED_QUIZ_PAGE = 5,
+        ADMIN_PAGE = 6,
+        CREATION_PANEL_PAGE = 7,
     }
     enum NumberSlotPage
     {

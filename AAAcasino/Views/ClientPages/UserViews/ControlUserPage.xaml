@@ -5,25 +5,25 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
                     xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
-    
-    <DataTemplate DataType="{x:Type vm:DefaultUserViewModel}">
-        <Grid d:DataContext="{d:DesignInstance vm:DefaultUserViewModel}">
+    <DataTemplate DataType="{x:Type vm:ControlUserViewModel}">
+        <Grid d:DataContext="{d:DesignInstance vm:ControlUserViewModel}">
             <DockPanel>
-                <Grid DockPanel.Dock="Top" Height="50">
+                <Grid DockPanel.Dock="Top" Visibility="{Binding VisableTopPanel}" MinHeight="50">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.2*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding ProfileOpenCommand}" Content="ПРОФИЛЬ"
-                            Grid.Column="0"/>
+                    <Button Command="{Binding SwitchToProfileCommand}" Content="ПРОФИЛЬ"
+                Grid.Column="0"/>
+                    <Button Command="{Binding SwitchToQuizzesCommand}" Content="ВИКТОРИНЫ"
+                Grid.Column="1"/>
+                    <Button Command="{Binding SwitchToSlotsCommand}" Content="СЛОТЫ"
+                Grid.Column="2"/>
                 </Grid>
                 <Grid DockPanel.Dock="Bottom">
-                    <ContentPresenter Content="{Binding SelectedPageViewModel}"/>
-                </Grid>
-                <Grid DockPanel.Dock="Bottom">
-                    
+                    <ContentPresenter Content="{Binding UserSelectedPage}"/>
                 </Grid>
             </DockPanel>
         </Grid>

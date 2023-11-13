@@ -17,7 +17,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         #region IPage
         public string Title => "Админ";
         public MainWindowViewModel MainViewModel { get; set; }
-        public void SetAnyModel(object? model) => _quizCurrent = (QuizModel)model;
+        public void SetAnyModel(object? model) { }
         #endregion
         #region Users tab
         private ObservableCollection<UserModel> _userModels = new ObservableCollection<UserModel>();

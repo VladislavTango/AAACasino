@@ -10,8 +10,8 @@ namespace AAAcasino.Models
             get => _id;
             set => _id = value;
         }
-        private string _str;
-        public string Str
+        private string? _str;
+        public string? Str
         {
             get => _str;
             set => Set(ref _str, value);
@@ -23,7 +23,14 @@ namespace AAAcasino.Models
             get => _correctness;
             set => Set(ref _correctness, value);
         }
-        public Answer(string str)
+
+        private bool _userAnswer = false;
+        public bool UserAnswer
+        {
+            get => _userAnswer;
+            set => Set(ref _userAnswer, value);
+        }
+        public Answer(string? str)
         {
             Str = str;
         }

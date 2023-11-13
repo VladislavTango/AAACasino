@@ -6,8 +6,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
     {
         #region IPage
         public string Title => "Профиль";
-        public MainWindowViewModel MainViewModel { get; set; }
-        public void SetAnyModel(object? model) { return; }
+        public MainWindowViewModel MainViewModel {  get; set; }
+        public void SetAnyModel(object? model)  {}
         #endregion
     }
 }

@@ -22,9 +22,12 @@ namespace AAAcasino
                     ClientPageViewModels = new List<IPageViewModel>
                     {
                         new LogInViewModel(),
-                        new DefaultUserViewModel(),
-                        new AdminViewModel(),
+                        new ControlUserViewModel(),
                         new ProfileViewModel(),
+                        new QuizzesViewModel(),
+                        new SlotsViewModel(),
+                        new SelectedQuizViewModel(),
+                        new AdminViewModel(),
                         new CreationQuizViewModel(),
                     },
                     SlotPageViewModels = new List<IPageViewModel>

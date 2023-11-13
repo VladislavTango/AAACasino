@@ -19,6 +19,7 @@ namespace AAAcasino.Models
             get => _question;
             set => Set(ref _question, value);
         }
+
         private ObservableCollection<Answer>_answers = new ObservableCollection<Answer>();
         public ObservableCollection<Answer> Answers
         {
