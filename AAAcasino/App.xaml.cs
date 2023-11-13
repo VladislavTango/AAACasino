@@ -32,7 +32,8 @@ namespace AAAcasino
                     },
                     SlotPageViewModels = new List<IPageViewModel>
                     {
-                        new SlotMineViewModel()
+                        new SlotMineViewModel(),
+                        new RouletteViewModel(),
                     }
                 }
             }.Show();

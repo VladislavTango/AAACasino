@@ -35,7 +35,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             {
                 Set(ref _userListIsOpen, value);
 
-                if(!value)
+                if (!value)
                 {
                     ObservableCollection<UserModel> users = _userModels;
                     Task.Run(() =>
@@ -66,7 +66,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             get => quizModels;
             set => Set(ref quizModels, value);
         }
-        
+
         private bool _quizListIsOpen = false;
         public bool QuizListIsOpen
         {
@@ -100,7 +100,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             MainViewModel.SelectedPageViewModel.SetAnyModel(QuizCurrent);
         }
         public bool CanAddQuizCommand(object parameter) => true;
-        
+
         #endregion
         #endregion
         public AdminViewModel()

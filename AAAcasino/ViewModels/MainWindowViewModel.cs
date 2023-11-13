@@ -23,6 +23,7 @@ namespace AAAcasino.ViewModels
     enum NumberSlotPage
     {
         MINESLOT_PAGE = 0,
+        ROULETTE_PAGE = 1,
     }
     internal class MainWindowViewModel : ViewModel
     {

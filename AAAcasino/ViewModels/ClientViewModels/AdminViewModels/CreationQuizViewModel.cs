@@ -79,7 +79,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             });
             MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
         }
-        private bool CanSaveQuizCommand(object parameter) => (QuizModel.Name != "" && QuizModel.Name != null);
+        private bool CanSaveQuizCommand(object parameter) => QuizModel.Name != "" && QuizModel.Name != null;
         public ICommand AddAnswerCommand { get; set; }
         private void OnAddAnswerCommand(object parameter)
         {
@@ -93,9 +93,9 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         public ICommand RemoveQuizNodeCommand { get; set; }
         private void OnRemoveQuizNodeCommand(object parameter)
         {
-                _quizModel.QuizNodes.Remove(SelectedQuest);
-                AnswStr = string.Empty;
-                Quest = string.Empty;
+            _quizModel.QuizNodes.Remove(SelectedQuest);
+            AnswStr = string.Empty;
+            Quest = string.Empty;
         }
         private bool CanRemoveQuizNodeCommand(object parameter) => _selectedQuest != null;
         public ICommand RemoveAnswerCommand { get; set; }
