@@ -50,14 +50,48 @@
                         </ListBox>
                     </TabItem.Content>
                 </TabItem>
-                <TabItem>
+                <TabItem Selector.IsSelected="{Binding QuizListIsOpen}">
                     <TabItem.Header>
                         <Label Content="Викторины"/>
                     </TabItem.Header>
                     <TabItem.Content>
                         <Grid>
-                            <Button Content="Add" Command="{Binding AddQuizCommand}" MaxHeight="25" MaxWidth="50"/>
-                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.25*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Button Content="Добавить викторину" Command="{Binding AddQuizCommand}" Grid.Row="0"/>
+                            <ListBox ItemsSource="{Binding QuizModels}" Grid.Row="1">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding ID}" Grid.Column="0"/>
+                                            <TextBlock Text="{Binding Name}" Grid.Column="1"/>
+                                            <Grid Grid.Column="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button Content="Удалить" Grid.Column="0" 
+                                                        Command="{Binding Path=DataContext.DeleteQuizCommand, 
+                                                    RelativeSource= {RelativeSource Mode=FindAncestor, AncestorType=ListBox}, 
+                                                    UpdateSourceTrigger=Default}"
+                                                        CommandParameter="{Binding}"/>
+                                                <Button Content="Редактировать" Grid.Column="1"
+                                                        Command="{Binding Path=DataContext.EditQuizCommand,
+                                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
+                                                    UpdateSourceTrigger=Default}"
+                                                        CommandParameter="{Binding}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>

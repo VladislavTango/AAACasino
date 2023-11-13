@@ -1,5 +1,6 @@
 ﻿using AAAcasino.Infrastructure.Commands;
 using AAAcasino.Models;
+using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using Microsoft.Identity.Client;
 using System.CodeDom;
@@ -68,14 +69,17 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             Task.Run(() =>
             {
                 int existance = (from q in MainWindowViewModel.applicationContext.quizModels.ToList()
-                                 where q == QuizModel
+                                 where q.ID == QuizModel.ID
                                  select q).Count();
-                if (existance > 0)
-                    MainWindowViewModel.applicationContext.Update(QuizModel);
-                else
-                    MainWindowViewModel.applicationContext.Add(QuizModel);
+                using(ApplicationContext db = new ApplicationContext())
+                {
+                    if (existance > 0)
+                        db.quizModels.Update(QuizModel);
+                    else
+                        db.quizModels.Add(QuizModel);
 
-                MainWindowViewModel.applicationContext.SaveChanges();
+                    db.SaveChanges();
+                }
             });
             MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
         }
@@ -91,9 +95,16 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         }
         private bool CanAddAnswerCommand(object parameter) => AnswStr != "";
         public ICommand RemoveQuizNodeCommand { get; set; }
+        //Добавить удаление связанной quiz node из бд так же сделать и для answer
         private void OnRemoveQuizNodeCommand(object parameter)
         {
-            _quizModel.QuizNodes.Remove(SelectedQuest);
+            QuizModel.QuizNodes.Remove(SelectedQuest);
+
+            using(ApplicationContext db = new ApplicationContext())
+            {
+
+            }
+
             AnswStr = string.Empty;
             Quest = string.Empty;
         }
@@ -101,7 +112,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         public ICommand RemoveAnswerCommand { get; set; }
         private void OnRemoveAnswerCommand(object parameter)
         {
-            _selectedQuest.Answers.Remove(_selectedAnswer);
+            int indexQN = QuizModel.QuizNodes.IndexOf(_selectedQuest);
+            QuizModel.QuizNodes[indexQN].Answers.Remove(_selectedAnswer);
         }
         private bool CanRemoveAnswerCommand(object parameter) => _selectedAnswer != null && _selectedQuest != null;
         #endregion
