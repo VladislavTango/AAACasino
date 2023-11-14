@@ -61,6 +61,14 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             QuizNode node = new QuizNode();
             node.Question = Quest;
             QuizModel.AddQuizNode(node);
+            Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizModels.Update(QuizModel);
+                    db.SaveChanges();
+                }
+            });
         }
         private bool CanAddQuizNodeCommand(object param) => true;
         public ICommand SaveQuizCommand { get; set; }
@@ -87,33 +95,74 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         public ICommand AddAnswerCommand { get; set; }
         private void OnAddAnswerCommand(object parameter)
         {
-            if (_selectedQuest != null)
+            int indexQN = QuizModel.QuizNodes.IndexOf(parameter as QuizNode);
+            QuizModel.QuizNodes[indexQN].Answers.Add(new Answer(AnswStr));
+            AnswStr = "";
+
+            Task.Run(() =>
             {
-                _selectedQuest.Answers.Add(new Answer(AnswStr));
-                AnswStr = string.Empty;
-            }
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizModels.Update(QuizModel);
+                    db.SaveChanges();
+                }
+            });
         }
-        private bool CanAddAnswerCommand(object parameter) => AnswStr != "";
+        private bool CanAddAnswerCommand(object parameter) => AnswStr != "" && AnswStr != null;
         public ICommand RemoveQuizNodeCommand { get; set; }
-        //Добавить удаление связанной quiz node из бд так же сделать и для answer
         private void OnRemoveQuizNodeCommand(object parameter)
         {
-            QuizModel.QuizNodes.Remove(SelectedQuest);
-
-            using(ApplicationContext db = new ApplicationContext())
+            QuizModel.QuizNodes.Remove(parameter as QuizNode);
+            Task.Run(() =>
             {
+                var quest = parameter as QuizNode;
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    foreach (var answ in quest.Answers)
+                        db.answers.Remove(answ);
 
-            }
+                    db.quizNodes.Remove(quest);
+                    db.SaveChanges();
+                }
+            });
 
             AnswStr = string.Empty;
             Quest = string.Empty;
         }
-        private bool CanRemoveQuizNodeCommand(object parameter) => _selectedQuest != null;
+        private bool CanRemoveQuizNodeCommand(object parameter) => true;
         public ICommand RemoveAnswerCommand { get; set; }
+        //Разметка не видит команду
         private void OnRemoveAnswerCommand(object parameter)
         {
-            int indexQN = QuizModel.QuizNodes.IndexOf(_selectedQuest);
-            QuizModel.QuizNodes[indexQN].Answers.Remove(_selectedAnswer);
+            var answer = parameter as Answer;
+
+            int indexQN = -1;
+            foreach (var qn in QuizModel.QuizNodes)
+            {
+                bool isFind = false;
+                foreach (var answ in qn.Answers)
+                {
+                    if(answ ==  answer)
+                    {
+                        isFind = true;
+                        indexQN = QuizModel.QuizNodes.IndexOf(qn);
+                        break;
+                    }
+                }
+
+                if (isFind)
+                    break;
+            }
+
+            QuizModel.QuizNodes[indexQN].Answers.Remove(answer);
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.answers.Remove(answer);
+                db.SaveChanges();
+            }
+            //int indexQN = QuizModel.QuizNodes.IndexOf(_selectedQuest);
+            //QuizModel.QuizNodes[indexQN].Answers.Remove(_selectedAnswer);
         }
         private bool CanRemoveAnswerCommand(object parameter) => _selectedAnswer != null && _selectedQuest != null;
         #endregion

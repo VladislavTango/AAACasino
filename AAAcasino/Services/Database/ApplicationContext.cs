@@ -7,6 +7,8 @@ namespace AAAcasino.Services.Database
     {
         public DbSet<UserModel> userModels { get; set; } = null!;
         public DbSet<QuizModel> quizModels { get; set; } = null!;
+        public DbSet<QuizNode> quizNodes {  get; set; } = null!;
+        public DbSet<Answer> answers { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AAACasinoDB;Trusted_Connection=True;");
