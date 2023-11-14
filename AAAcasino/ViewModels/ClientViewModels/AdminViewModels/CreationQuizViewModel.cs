@@ -40,20 +40,6 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             get => _answStr;
             set => Set(ref _answStr, value);
         }
-
-        private QuizNode? _selectedQuest = null;
-        public QuizNode? SelectedQuest
-        {
-            get => _selectedQuest;
-            set => Set(ref _selectedQuest, value);
-        }
-
-        private Answer _selectedAnswer = new Answer(null);
-        public Answer SelectedAnswer
-        {
-            get => _selectedAnswer;
-            set => Set(ref _selectedAnswer, value);
-        }
         #region command
         public ICommand AddQuizNodeCommand { get; set; }
         private void OnAddQuizNodeCommand(object param)
@@ -131,7 +117,6 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         }
         private bool CanRemoveQuizNodeCommand(object parameter) => true;
         public ICommand RemoveAnswerCommand { get; set; }
-        //Разметка не видит команду
         private void OnRemoveAnswerCommand(object parameter)
         {
             var answer = parameter as Answer;
@@ -161,10 +146,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
                 db.answers.Remove(answer);
                 db.SaveChanges();
             }
-            //int indexQN = QuizModel.QuizNodes.IndexOf(_selectedQuest);
-            //QuizModel.QuizNodes[indexQN].Answers.Remove(_selectedAnswer);
         }
-        private bool CanRemoveAnswerCommand(object parameter) => _selectedAnswer != null && _selectedQuest != null;
+        private bool CanRemoveAnswerCommand(object parameter) => true;
         #endregion
         public CreationQuizViewModel()
         {

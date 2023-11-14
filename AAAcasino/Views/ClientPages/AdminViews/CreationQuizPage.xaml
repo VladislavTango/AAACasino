@@ -4,8 +4,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.AdminViewModels"
-                    xmlns:components ="clr-namespace:AAAcasino.Components">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.AdminViewModels">
 
     <DataTemplate DataType="{x:Type vm:CreationQuizViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:CreationQuizViewModel}">
@@ -76,7 +75,7 @@
                                                 <TextBlock Text="{Binding Str}"/>
                                                 <CheckBox IsChecked="{Binding IsCorrect}"/>
                                             <Button Content="Удалить" Command="{Binding Path=DataContext.RemoveAnswerCommand,
-                                                RelativeSource={RelativeSource AncestorType= ListBox},
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox, AncestorLevel=2},
                                                 UpdateSourceTrigger=Default}"
                                                     CommandParameter="{Binding}"/>
                                         </WrapPanel>
