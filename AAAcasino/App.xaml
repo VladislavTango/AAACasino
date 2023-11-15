@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/ClientPages/LogInPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/SignUpPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/ControlUserPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/ProfilePage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/UserViews/QuizzesPage.xaml"/>
