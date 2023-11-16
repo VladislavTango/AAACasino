@@ -4,6 +4,7 @@ using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using Microsoft.Identity.Client;
 using System.CodeDom;
+using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Threading.Tasks;
@@ -145,7 +146,20 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         private bool CanRemoveAnswerCommand(object parameter) => true;
         #endregion
         #region events
+        public void ImageDropEvent(object sender, DragEventArgs e)
+        {
+            string[] path = (string[])e.Data.GetData(DataFormats.FileDrop);
+            QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
 
+            Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizModels.Update(QuizModel);
+                    db.SaveChanges();
+                }
+            });
+        }
         #endregion
         public CreationQuizViewModel()
         {

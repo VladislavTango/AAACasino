@@ -49,43 +49,7 @@
             <Button Grid.Column="2" Content="Добавить"/>
         </Grid>
 
-        <ListBox ItemsSource="{Binding list}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3">
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
-            <ListBoxItem>Question1</ListBoxItem>
+        <ListBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3">
         </ListBox>
     </Grid>
 </Window>
