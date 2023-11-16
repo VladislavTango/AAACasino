@@ -27,6 +27,13 @@ namespace AAAcasino.Models
             set => Set(ref _reward, value); 
         }
 
+        private byte[]? _imageBytes = null;
+        public byte[]? ImageBytes
+        {
+            get => _imageBytes;
+            set => Set(ref _imageBytes, value);
+        }
+
         private ObservableCollection<QuizNode> _quizNodes = new ObservableCollection<QuizNode>();
         public ObservableCollection<QuizNode> QuizNodes { get => _quizNodes; }
         public void AddQuizNode(QuizNode node) { _quizNodes.Add(node); }

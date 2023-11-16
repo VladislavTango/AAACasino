@@ -14,7 +14,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="0.5*"/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -28,9 +28,8 @@
             </StackPanel>
 
             <ListBox ItemsSource="{Binding QuizModel.QuizNodes}" 
-                     Grid.ColumnSpan="3" Grid.Row="2" 
-                     SelectedItem="{Binding SelectedQuest}">
-                
+                     Grid.ColumnSpan="3" Grid.Row="2">
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -48,9 +47,7 @@
                             
                             <TextBlock Text="{Binding Question}" Grid.Row="0" Grid.Column="0"/>
                             
-                            <TextBox Grid.Column="1" Text="{Binding Path=DataContext.AnswStr,
-                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
-                                UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Grid.Column="1" Text="{Binding StrAnswCreation}"/>
 
                             <Button Content="Добавить" Grid.Column="2"
                                     Command="{Binding Path=DataContext.AddAnswerCommand,

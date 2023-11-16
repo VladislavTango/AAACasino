@@ -1,4 +1,5 @@
 ﻿using AAAcasino.ViewModels.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AAAcasino.Models
 {
@@ -24,7 +25,9 @@ namespace AAAcasino.Models
             set => Set(ref _correctness, value);
         }
 
+        [NotMapped]
         private bool _userAnswer = false;
+        [NotMapped]
         public bool UserAnswer
         {
             get => _userAnswer;

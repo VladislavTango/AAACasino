@@ -34,12 +34,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             get => _quest;
             set => Set(ref _quest, value);
         }
-        private string? _answStr;
-        public string AnswStr
-        {
-            get => _answStr;
-            set => Set(ref _answStr, value);
-        }
+
         #region command
         public ICommand AddQuizNodeCommand { get; set; }
         private void OnAddQuizNodeCommand(object param)
@@ -82,8 +77,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         private void OnAddAnswerCommand(object parameter)
         {
             int indexQN = QuizModel.QuizNodes.IndexOf(parameter as QuizNode);
-            QuizModel.QuizNodes[indexQN].Answers.Add(new Answer(AnswStr));
-            AnswStr = "";
+            QuizModel.QuizNodes[indexQN].Answers.Add(new Answer(QuizModel.QuizNodes[indexQN].StrAnswCreation));
+            QuizModel.QuizNodes[indexQN].StrAnswCreation = "";
 
             Task.Run(() =>
             {
@@ -94,7 +89,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
                 }
             });
         }
-        private bool CanAddAnswerCommand(object parameter) => AnswStr != "" && AnswStr != null;
+        private bool CanAddAnswerCommand(object parameter) => 
+            (parameter as QuizNode).StrAnswCreation != "" && (parameter as QuizNode).StrAnswCreation != null;
         public ICommand RemoveQuizNodeCommand { get; set; }
         private void OnRemoveQuizNodeCommand(object parameter)
         {
@@ -112,7 +108,6 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
                 }
             });
 
-            AnswStr = string.Empty;
             Quest = string.Empty;
         }
         private bool CanRemoveQuizNodeCommand(object parameter) => true;
@@ -148,6 +143,9 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             }
         }
         private bool CanRemoveAnswerCommand(object parameter) => true;
+        #endregion
+        #region events
+
         #endregion
         public CreationQuizViewModel()
         {
