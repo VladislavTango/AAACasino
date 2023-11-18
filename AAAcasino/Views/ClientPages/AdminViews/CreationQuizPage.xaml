@@ -57,10 +57,75 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox Grid.Column="0" Text="{Binding Quest}"/>
-                    <Button Grid.Column="2" Content="Добавить вопрос" Command="{Binding AddQuizNodeCommand}"/>
+                    <Button Grid.Column="2" Content="Добавить вопрос" 
+                            Command="{Binding AddQuizNodeCommand}"/>
                 </Grid>
 
-                <ListBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3">
+                <ListBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding QuizModel.QuizNodes}"
+                         HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
+                         ScrollViewer.IsDeferredScrollingEnabled="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox VerticalContentAlignment="Center" Grid.Row="0" Text="{Binding Question}"/>
+
+                                <Expander Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+                                    <Grid>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.1*"/>
+                                            <!--Текст вопроса и кнопка-->
+                                            <RowDefinition Height="0.05*"/>
+                                            <!--Отступ-->
+                                            <RowDefinition Height="1*"/>
+                                            <!--Картинка икнопка удаления-->
+                                            <RowDefinition Height="0.05*"/>
+                                            <!--Отступ-->
+                                            <RowDefinition Height="1*"/>
+                                            <!--Варианты ответов-->
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="0.1*"/>
+                                            <ColumnDefinition Width="0.2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox Text="{Binding StrAnswCreation}" Grid.Row="0" Grid.Column="0"/>
+
+                                        <Button Content="Добавить ответ" Grid.Column="2" Grid.Row="0"
+                                                Command="{Binding Path=DataContext.AddAnswerCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
+                                                UpdateSourceTrigger=Default}" CommandParameter="{Binding}"/>
+
+                                        <Rectangle Grid.Column="0" Grid.Row="2" Fill="Aqua"/>
+
+                                        <!--<Border BorderThickness="1" Grid.Column="0" Grid.Row="2" Background="Aqua"
+                                                AllowDrop="True">
+
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Drop">
+                                                    <i:CallMethodAction MethodName="ImageQuestionDropEvent" TargetObject="{Binding}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                            <Image Source="{Binding QuestImageBytes, Converter={converter:FromBytes}}"/>
+                                        </Border>-->
+
+                                    </Grid>
+
+                                </Expander>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
                 
             </Grid>
