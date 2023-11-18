@@ -24,6 +24,7 @@ namespace AAAcasino.ViewModels
     {
         MINESLOT_PAGE = 0,
         ROULETTE_PAGE = 1,
+        ONEHAND_PAGE=2
     }
     internal class MainWindowViewModel : ViewModel
     {
@@ -71,7 +72,7 @@ namespace AAAcasino.ViewModels
         private bool CanInitCommand(object parameter) => _init;
         private void OnInitCommand(object parameter)
         {
-            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.LOGIN_PAGE];
+            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
             SelectedPageViewModel.MainViewModel = this;
             _init = false;
             ImgVis = Visibility.Collapsed;

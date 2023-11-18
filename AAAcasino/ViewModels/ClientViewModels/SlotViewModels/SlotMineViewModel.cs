@@ -20,22 +20,19 @@ namespace AAAcasino.ViewModels.SlotViewModels
         public void SetAnyModel(object? model)
         {
             Buttons = CreateButtons(Buttons);
-            Buttons2 = CreateButtons(Buttons2);
-            Buttons3 = CreateButtons(Buttons3);
-            Buttons4 = CreateButtons(Buttons4);
-            Buttons5 = CreateButtons(Buttons5);
+           
             balanse = $"Баланс: {MainViewModel.User.Balance}";
         }
         #endregion
+        string lastnormtbox;
+
         public ObservableCollection<Button> Buttons { get; private set; }
-        public ObservableCollection<Button> Buttons2 { get; private set; }
-        public ObservableCollection<Button> Buttons3 { get; private set; }
-        public ObservableCollection<Button> Buttons4 { get; private set; }
-        public ObservableCollection<Button> Buttons5 { get; private set; }
+      
         bool GameStarted = false;
 
         public static double ThisMn = 0;
         public static double NextMn = 0;
+        public  int ThisBombs = 0;
 
         public static double NextBid = 0;
 
@@ -44,20 +41,18 @@ namespace AAAcasino.ViewModels.SlotViewModels
 
         Button[] btn = new Button[25];
         bool[] Onclick = new bool[25];
-        int itc = 0;
         ObservableCollection<Button> CreateButtons(ObservableCollection<Button> but)
         {
             but = new ObservableCollection<Button>();
-            for (int i = 0 + itc; i < 5 + itc; i++)
+            for (int i = 0 ; i < 25; i++)
             {
                 btn[i] = new Button();
                 btn[i].CommandParameter = i;
                 btn[i].Background = Brushes.Blue;
-                btn[i].Height = 100;
                 btn[i].Command = ColorChange;
+                btn[i].BorderBrush= new SolidColorBrush(Colors.Black);
                 but.Add(btn[i]);
             }
-            itc += 5;
             return but;
         }
 
@@ -65,7 +60,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
         {
             for (int i = 0; i < field.Length; i++)
                 field[i] = true;
-            int num = Bombs + 1;
+            int num = ThisBombs + 1;
             int counter = 0;
             Random rnd = new Random();
             while (num > counter)
@@ -77,7 +72,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
         }
         string NormalFormOfTextBox(string str)
         {
-            if (str.Last() == '-') return str.Remove(str.Length - 1);
+
             try
             {
                 if (!char.IsDigit(str, str.Length - 1))
@@ -90,13 +85,16 @@ namespace AAAcasino.ViewModels.SlotViewModels
                     else return str.Remove(str.Length - 1);
                 }
             }
-            catch { return "0"; }
+            catch { return ""; }
             string[] col = str.Split(',');
             try
             {
                 if (col[1].Length > 2) return str.Remove(str.Length - 1);
             }
             catch { }
+            try { Convert.ToDouble(str); }
+            catch { return lastnormtbox; }
+            lastnormtbox = str;
             return str;
         }
 
@@ -104,12 +102,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
         {
             ColorChange = new LamdaCommand(OnColorChangeCommand, CanColorChangeCommand);
             Start = new LamdaCommand(OnStartCommand, CanStartCommand);
-            //    Buttons = CreateButtons(Buttons);
-            //    Buttons2 = CreateButtons(Buttons2);
-            //    Buttons3 = CreateButtons(Buttons3);
-            //    Buttons4 = CreateButtons(Buttons4);
-            //    Buttons5 = CreateButtons(Buttons5);
-            Stop = new LamdaCommand(OnStopCommand, CanStopCommand);
+            BackToMenu = new LamdaCommand(OnBackToMenuCommand, CanBackToMenuCommand);
         }
 
         public ICommand ColorChange { get; }
@@ -122,47 +115,21 @@ namespace AAAcasino.ViewModels.SlotViewModels
                 if (Onclick[num] != true)
                 {
                     Onclick[num] = true;
-                    #region окрас
-                    if (num < 5)
-                    {
-                        if (field[num] == true)
-                            Buttons[num].Background = Brushes.Green;
-                        else
-                            Buttons[num].Background = Brushes.Red;
-                    }
-                    if (num > 4 && num <= 9)
-                    {
-                        if (field[num] == true)
-                            Buttons2[num - 5].Background = Brushes.Green;
-                        else
-                            Buttons2[num - 5].Background = Brushes.Red;
-                    }
-                    if (num > 9 && num <= 14)
-                    {
-                        if (field[num] == true)
-                            Buttons3[num - 10].Background = Brushes.Green;
-                        else
-                            Buttons3[num - 10].Background = Brushes.Red;
-                    }
-                    if (num > 14 && num <= 19)
-                    {
-                        if (field[num] == true)
-                            Buttons4[num - 15].Background = Brushes.Green;
-                        else
-                            Buttons4[num - 15].Background = Brushes.Red;
-                    }
-                    if (num > 19 && num <= 24)
-                    {
-                        if (field[num] == true)
-                            Buttons5[num - 20].Background = Brushes.Green;
-                        else
-                            Buttons5[num - 20].Background = Brushes.Red;
-                    }
+                    #region окрас                              
+                    if (field[num] == true)
+                        Buttons[num].Background = Brushes.Green;
+                    else
+                        Buttons[num].Background = Brushes.Red;
+
                     if (field[num] == false)
+                    {
                         GameStarted = false;
+                        StartColor = "LightBlue";
+                        StartContent = "Старт";
+                    }
                     #endregion
-                    ThisMn += Math.Round(Bombs * 0.2 + 0.1, 2);
-                    NextMn = ThisMn + Math.Round(Bombs * 0.2 + 0.1, 2);
+                    ThisMn += Math.Round(ThisBombs * 0.2 + 0.1, 2);
+                    NextMn = ThisMn + Math.Round(ThisBombs * 0.2 + 0.1, 2);
                     Mn = $"Множитель={Math.Round(ThisMn, 2)}X";
                     NMn = $"Следующий множитель={Math.Round(NextMn, 2)}X";
                     BWin = $"Баланс после выйгрыша:{Math.Round(Convert.ToDouble(Bid) * ThisMn + MainViewModel.User.Balance, 2)}";
@@ -217,15 +184,17 @@ namespace AAAcasino.ViewModels.SlotViewModels
             set => Set(ref _BWin, value);
         }
         #endregion
-        private double _height = 600;
-        public double Height
+        private string _StartColor= "LightBlue";
+        public string StartColor
         {
-            get { return _height; }
-            set
-            {
-                _height = value;
-                OnPropertyChanged(nameof(Height));
-            }
+            get => _StartColor;
+            set => Set(ref _StartColor, value);
+        }
+        private string _StartContent = "Старт";
+        public string StartContent
+        {
+            get => _StartContent;
+            set => Set(ref _StartContent, value);
         }
         #region кнопки
         public ICommand Start { get; }
@@ -238,30 +207,35 @@ namespace AAAcasino.ViewModels.SlotViewModels
                 {
                     if (!GameStarted)
                     {
+                        StartColor = "Red";
+                        StartContent = "Стоп";
                         GameStarted = true;
                         ToFalse();
                         GetField();
                         ToBlue();
                         ThisMn = 0;
+                        ThisBombs = Bombs;
                         MainViewModel.User.Balance -= Convert.ToDouble(Bid);
                         balanse = $"баланс={MainViewModel.User.Balance}";
+                    }
+                    else {                        
+                        GameStarted = false;
+                        MainViewModel.User.Balance = Math.Round(Convert.ToDouble(Bid) * ThisMn + MainViewModel.User.Balance, 2);
+                        balanse = $"баланс={MainViewModel.User.Balance}";
+                        StartColor = "LightBlue";
+                        StartContent = "Старт";
                     }
                 }
                 else MessageBox.Show("У вас недостаточно баллов");
             }
             catch { MessageBox.Show("введите нормально"); }
         }
-        public ICommand Stop { get; }
+        public ICommand BackToMenu { get; }
 
-        private bool CanStopCommand(object parameter) => true;
-        private void OnStopCommand(object parameter)
+        private bool CanBackToMenuCommand(object parameter) => true;
+        private void OnBackToMenuCommand(object parameter)
         {
-            if (GameStarted)
-            {
-                GameStarted = false;
-                MainViewModel.User.Balance = Math.Round(Convert.ToDouble(Bid) * ThisMn + MainViewModel.User.Balance, 2);
-                balanse = $"баланс={MainViewModel.User.Balance}";
-            }
+           //хуй говна поклюй
         }
         #endregion
         void ToFalse()
@@ -271,13 +245,9 @@ namespace AAAcasino.ViewModels.SlotViewModels
         }
         void ToBlue()
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 25; i++)
             {
-                Buttons[i].Background = Brushes.Blue;
-                Buttons2[i].Background = Brushes.Blue;
-                Buttons3[i].Background = Brushes.Blue;
-                Buttons4[i].Background = Brushes.Blue;
-                Buttons5[i].Background = Brushes.Blue;
+                Buttons[i].Background = Brushes.Blue;  
             }
         }
     }

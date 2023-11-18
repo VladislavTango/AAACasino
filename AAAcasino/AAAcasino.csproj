@@ -8,6 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\OneHandMat-2.jpg" />
+    <None Remove="Resources\OneHandMat-3.jpg" />
+    <None Remove="Resources\OneHandMat-4.jpg" />
+    <None Remove="Resources\OneHandMat-5.jpg" />
+    <None Remove="Resources\OneHandMat-6.jpg" />
+    <None Remove="Resources\OneHandMat-7.jpg" />
+    <None Remove="Resources\OneHandMat-8.jpg" />
+    <None Remove="Resources\OneHandMat-9.jpg" />
+    <None Remove="Resources\OneHandMat.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\OneHandMat-5.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
@@ -21,6 +39,33 @@
     <Folder Include="Data\" />
     <Folder Include="Infrastructure\Commands\ClientCommands\" />
     <Folder Include="Infrastructure\Commands\SlotCommands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\OneHandMat-2.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat-3.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat-4.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat-6.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat-7.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat-8.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat-9.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\OneHandMat.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

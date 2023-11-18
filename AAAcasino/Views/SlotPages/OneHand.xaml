@@ -1,0 +1,186 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    mc:Ignorable="d"
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.SlotViewModels">
+    <DataTemplate DataType="{x:Type vm:OneHandViewModel}">
+        <Grid d:DataContext="{d:DesignInstance vm:OneHandViewModel}">
+            <Grid ShowGridLines="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="2" ShowGridLines="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="9*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0" ShowGridLines="False">
+                        <TextBlock Text="Комбинации из 3-X" FontSize="30" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Grid>
+
+                    <Grid ShowGridLines="False" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.ColumnSpan="4" Grid.RowSpan="9">
+                            <ItemsControl  ItemsSource="{Binding ThreeCombos}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate  >
+                                        <UniformGrid   Rows="9" Columns="4"  />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate >
+                                    <DataTemplate >
+                                        <Image  Source="{Binding}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                        <TextBlock Text="10x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" FontSize="24"/>
+                        <TextBlock Text="20x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" FontSize="24"/>
+                        <TextBlock Text="40x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2" FontSize="24"/>
+                        <TextBlock Text="50x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3" FontSize="24"/>
+                        <TextBlock Text="60x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="4" FontSize="24"/>
+                        <TextBlock Text="70x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5" FontSize="24"/>
+                        <TextBlock Text="80x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="6" FontSize="24"/>
+                        <TextBlock Text="100x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="7" FontSize="24"/>
+                        <TextBlock Text="150x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="8" FontSize="24"/>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="0" ShowGridLines="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="9*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" ShowGridLines="False">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="9*"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding BackToMenu}" Content=" ↩" FontSize="20"/>
+                        <TextBlock Text="Комбинации из 2-х" FontSize="30" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Grid>
+                    <Grid ShowGridLines="False" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="9">
+                            <ItemsControl  ItemsSource="{Binding TwoCombos}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate  >
+                                        <UniformGrid   Rows="9" Columns="3"  />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate >
+                                    <DataTemplate >
+                                        <Image  Source="{Binding}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl></Grid>
+                        <TextBlock Text="1x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" FontSize="24"/>
+                        <TextBlock Text="2x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" FontSize="24"/>
+                        <TextBlock Text="4x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" FontSize="24"/>
+                        <TextBlock Text="5x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" FontSize="24"/>
+                        <TextBlock Text="6x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="4" FontSize="24"/>
+                        <TextBlock Text="7x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="5" FontSize="24"/>
+                        <TextBlock Text="8x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="6" FontSize="24"/>
+                        <TextBlock Text="10x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="7" FontSize="24"/>
+                        <TextBlock Text="15x" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="8" FontSize="24"/>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1" ShowGridLines="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+                    <Grid  Grid.Row="1" ShowGridLines="False">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="2" BorderBrush="Black" Grid.Row="0" Panel.ZIndex="55"/>
+                        <Border BorderThickness="5" BorderBrush="Black" Grid.Row="1" Panel.ZIndex="55"/>
+                        <Border BorderThickness="2" BorderBrush="Black" Grid.Row="2" Panel.ZIndex="55"/>
+                        <ItemsControl  Grid.RowSpan="3"  ItemsSource="{Binding squares}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate  >
+                                    <UniformGrid   Rows="3" Columns="3"  />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate >
+                                    <Image  Source="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <Button Command="{Binding start}"/>
+                            <Grid ShowGridLines="True" Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding balance}" Grid.Row="1" FontSize="36" VerticalAlignment="Bottom"/>
+                                <TextBox Grid.Row="0" FontStretch="Normal" Focusable="True" Text="{Binding Bet,UpdateSourceTrigger=PropertyChanged}"
+                                         BorderThickness="5" FontSize="40" BorderBrush="Black">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="GotFocus">
+                                            <i:InvokeCommandAction Command="{Binding iia}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="0">
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
+    

@@ -19,9 +19,11 @@
                     <RowDefinition Height="1*"></RowDefinition>
 
                     <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Content=" ↩" FontSize="20"/>
+                <Button Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Content=" ↩" FontSize="20" Command="{Binding BackToMenu}"/>
                 <!--это к сане-->
                 <Label Grid.Row="0" Content="Ставка" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="30" />
                 <Label Grid.Row="2" Content="{Binding balanse,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="30" />
@@ -51,15 +53,23 @@
                 </Expander>
                 <TextBox Grid.Row="1" BorderBrush="Black" Text="{Binding Bid,UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" FontSize="20"/>
 
-                <Button Background="LightBlue" Command="{Binding Start}" Content="Старт" FontSize="30" Grid.Row="3"/>
+                <Button Background="{Binding StartColor,UpdateSourceTrigger=PropertyChanged}" Command="{Binding Start}" Content="{Binding Path=StartContent,UpdateSourceTrigger=PropertyChanged}" FontSize="30" Grid.Row="3"/>
+                <TextBlock Grid.Row="4" HorizontalAlignment="Left"
+                           Text="{Binding BWin}"
+                           FontWeight="Bold" 
+                            FontSize="35"  TextWrapping="Wrap" VerticalAlignment="Top" />
+                <TextBlock Grid.Row="5"
+                           Text="{Binding Mn}" 
+                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                         FontSize="35" FontWeight="Bold"/>
 
-                <Button Background="pink" Command="{Binding Stop}" Content="Стоп" FontSize="30" Grid.Row="4"/>
+                <!---<Button Background="pink" Command="{Binding Stop}" Content="Стоп" FontSize="30" Grid.Row="4"/>-->
 
             </Grid>
 
 
             <GroupBox  Grid.Column="2"  Margin="10" Padding="10">
-                <Grid>
+                <!--<Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="*"/>
@@ -71,46 +81,22 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-
-                        <ItemsControl Grid.Column="0"  ItemsSource="{Binding Buttons}">
+                        </Grid.ColumnDefinitions>-->
+                        <ItemsControl Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding Buttons}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Rows="5" Columns="5" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Height="2000"  Content="{Binding Content}" Command="{Binding Command}" />
+                                    <Button Content="{Binding Text}" Command="{Binding Command}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Buttons2}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Content="{Binding Content}" Command="{Binding Command}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <ItemsControl Grid.Column="2" ItemsSource="{Binding Buttons3}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Content="{Binding Content}" Command="{Binding Command}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <ItemsControl Grid.Column="3" ItemsSource="{Binding Buttons4}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Content="{Binding Content}" Command="{Binding Command}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <ItemsControl Grid.Column="4" ItemsSource="{Binding Buttons5}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Content="{Binding Content}" Command="{Binding Command}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Grid>
-                    <Grid Grid.Row="1">
+                    <!--</Grid>-->
+                    
+                        <!--<Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="2*"/>
@@ -134,9 +120,9 @@
                            Content="{Binding BWin}"
                            FontWeight="Bold"
                             VerticalAlignment="Bottom"
-                            FontSize="35" />
-                    </Grid>
-                </Grid>
+                            FontSize="35" />-->
+                    <!--</Grid>
+                </Grid>-->
             </GroupBox>
         </Grid>
     </DataTemplate>
