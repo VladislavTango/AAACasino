@@ -1,7 +1,9 @@
 ﻿using AAAcasino.Infrastructure.Commands;
 using AAAcasino.Infrastructure.Commands.Base;
 using AAAcasino.Models;
+using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -75,37 +77,73 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             {
                 Set(ref _quizListIsOpen, value);
 
-                if (!value)
-                {
-                    ObservableCollection<QuizModel> quizzes = QuizModels;
-                    Task.Run(() =>
-                    {
-                        MainWindowViewModel.applicationContext.UpdateRange(quizzes);
-                        MainWindowViewModel.applicationContext.SaveChanges();
-                    });
-                    QuizModels.Clear();
-                }
-                else
+                if (value)
                 {
                     QuizModels = new ObservableCollection<QuizModel>(MainWindowViewModel.applicationContext.quizModels.ToList());
                 }
+                else
+                {
+                    QuizModels.Clear();
+                }
             }
         }
-        #region
+        #region Commands
         public ICommand AddQuizCommand { get; set; }
         private void OnAddQuizCommand(object parameter)
         {
             MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.CREATION_PANEL_PAGE];
             MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
-            MainViewModel.SelectedPageViewModel.SetAnyModel(QuizCurrent);
+            MainViewModel.SelectedPageViewModel.SetAnyModel(new QuizModel());
         }
-        public bool CanAddQuizCommand(object parameter) => true;
+        private bool CanAddQuizCommand(object parameter) => true;
+        public ICommand DeleteQuizCommand { get; set; }
+        private void OnDeleteQuizCommand(object quiz)
+        {
+            var _quiz = quiz as QuizModel;
+            QuizModels.Remove(_quiz);
 
+            Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    _quiz = (from quizm in db.quizModels.Include(qm => qm.QuizNodes).ThenInclude(qn => qn.Answers).ToList()
+                             where quizm.ID == _quiz.ID
+                             select quizm).ToList().First();
+                    db.quizModels.Remove(_quiz);
+                    db.SaveChanges();
+                }
+            });
+        }
+        private bool CanDeleteQuizCommand(object quiz) => true;
+        public ICommand EditQuizCommand { get; set; }
+        private void OnEditQuizCommand(object quiz)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                QuizCurrent = quiz as QuizModel;
+
+                Task task = Task.Run(() =>
+                {
+                    QuizCurrent = (from qm in db.quizModels.Include(quizm => quizm.QuizNodes).ThenInclude(qn => qn.Answers).ToList()
+                                   where qm.ID == QuizCurrent.ID
+                                   select qm).ToList().First();
+                });
+
+                task.Wait();
+
+                MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.CREATION_PANEL_PAGE];
+                MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
+                MainViewModel.SelectedPageViewModel.SetAnyModel(QuizCurrent);
+            }
+        }
+        private bool CanEditQuizCommand(object quiz) => true;
         #endregion
         #endregion
         public AdminViewModel()
         {
             AddQuizCommand = new LamdaCommand(OnAddQuizCommand, CanAddQuizCommand);
+            DeleteQuizCommand = new LamdaCommand(OnDeleteQuizCommand, CanDeleteQuizCommand);
+            EditQuizCommand = new LamdaCommand(OnEditQuizCommand, CanEditQuizCommand);
         }
     }
 }

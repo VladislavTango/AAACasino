@@ -1,5 +1,6 @@
 ﻿using AAAcasino.Infrastructure.Commands;
 using AAAcasino.Models;
+using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
             {
                 QuizModel = model != null ? (QuizModel)model : throw new ArgumentNullException(nameof(model));
                 CurrentQuestion = QuizModel.QuizNodes[0];
+                _questionNumber = 0;
             }
             catch
             {
@@ -26,15 +28,15 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         }
         #endregion
         #region Fields
-        private QuizModel _quizModel;
-        public QuizModel QuizModel
+        private QuizModel? _quizModel = null;
+        public QuizModel? QuizModel
         {
             get => _quizModel;
             set => Set(ref _quizModel, value);
         }
 
-        private QuizNode _currentQuestion = null!;
-        public QuizNode CurrentQuestion
+        private QuizNode? _currentQuestion = null;
+        public QuizNode? CurrentQuestion
         {
             get => _currentQuestion;
             set => Set(ref _currentQuestion, value);
@@ -68,17 +70,36 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
                     if (!fullRight)
                         break;
                 }
+
                 if (fullRight)
                 {
-                    // не апдейтает юзера в бд
                     double reward = QuizModel.Reward;
                     Task.Run(() =>
                     {
                         MainViewModel.User.Balance += reward;
-                        MainWindowViewModel.applicationContext.userModels.Update(MainViewModel.User);
-                        MainWindowViewModel.applicationContext.SaveChanges();
+                        using(ApplicationContext db = new ApplicationContext())
+                        {
+                            db.userModels.Update(MainViewModel.User);
+                            db.SaveChanges();
+                        }
                     });
                 }
+
+                //Сброс всех результатов и очистка модели
+                Task.Run(() =>
+                {
+                    foreach (var qn in QuizModel.QuizNodes)
+                    {
+                        foreach (var uAnsw in qn.Answers)
+                        {
+                            uAnsw.UserAnswer = false;
+                        }
+                    }
+                    QuizModel = null;
+                    CurrentQuestion = null;
+                    _questionNumber = 0;
+                });
+
                 MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
             }
         }

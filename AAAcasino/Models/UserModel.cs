@@ -12,12 +12,14 @@ namespace AAAcasino.Models
             get => _id;
             set => Set(ref _id, value);
         }
+
         private string? _username;
         public string? Username
         {
             get => _username;
             set => Set(ref _username, value);
         }
+
         private string? _password;
         public string? Password
         {

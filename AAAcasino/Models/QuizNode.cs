@@ -1,6 +1,7 @@
 ﻿using AAAcasino.ViewModels.Base;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Windows.Input;
 
 namespace AAAcasino.Models
@@ -18,6 +19,22 @@ namespace AAAcasino.Models
         {
             get => _question;
             set => Set(ref _question, value);
+        }
+
+        private byte[]? _questImageBytes = null;
+        public byte[]? QuestImageBytes
+        {
+            get => _questImageBytes;
+            set => Set(ref _questImageBytes, value);
+        }
+
+        [NotMapped]
+        private string? _strAnswCreation = null;
+        [NotMapped]
+        public string? StrAnswCreation
+        {
+            get => _strAnswCreation;
+            set => Set(ref _strAnswCreation, value);
         }
 
         private ObservableCollection<Answer>_answers = new ObservableCollection<Answer>();

@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\" />
     <Folder Include="Data\" />
     <Folder Include="Infrastructure\Commands\ClientCommands\" />
     <Folder Include="Infrastructure\Commands\SlotCommands\" />

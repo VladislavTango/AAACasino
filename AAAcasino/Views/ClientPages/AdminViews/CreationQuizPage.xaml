@@ -5,60 +5,130 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
                     xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.AdminViewModels"
-                    xmlns:components ="clr-namespace:AAAcasino.Components">
+                    xmlns:converter="clr-namespace:AAAcasino.Infrastructure">
 
     <DataTemplate DataType="{x:Type vm:CreationQuizViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:CreationQuizViewModel}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+            <Grid>
 
-            <TextBox Text="{Binding QuizModel.Name}" Grid.Column="0" Grid.Row="0"/>
-            <TextBox Text="{Binding Quest}" Grid.Column="1" Grid.Row="0"/>
-            <StackPanel  Grid.Column="2" Grid.Row="0">
-                <Button Content="Add" Command="{Binding AddQuizNodeCommand}"/>
-                <Button Content="Save" Command="{Binding SaveQuizCommand}"/>
-                <Button Content="Remove Qustion" Command="{Binding RemoveQuizNodeCommand}"/>
-            </StackPanel>
-            <WrapPanel Grid.Row="1">
-                <TextBox Text="{Binding AnswStr}" MinWidth="200"/>
-                <Button Content="Add Answer" Command="{Binding AddAnswerCommand}"/>
-            </WrapPanel>
-            <ListBox ItemsSource="{Binding QuizModel.QuizNodes}" 
-                     Grid.ColumnSpan="3" Grid.Row="2" 
-                     SelectedItem="{Binding SelectedQuest}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Question}" Grid.Row="0"/>
-                            <ListBox ItemsSource="{Binding Answers}" Grid.Row="1"
-                                     SelectedItem="{Binding Path=DataContext.SelectedAnswer,
-                                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
-                                     UpdateSourceTrigger=PropertyChanged}">      
-                                <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <WrapPanel>
-                                                <TextBlock Text="{Binding Str}"/>
-                                                <CheckBox IsChecked="{Binding IsCorrect}"/>
-                                            </WrapPanel>
-                                    </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.05*"/>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.05*"/>
+                    <RowDefinition Height="1.25*"/>
+                    <RowDefinition Height="0.05*"/>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.05*"/>
+                    <RowDefinition Height="0.7*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.01*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.01*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Text="{Binding QuizModel.Name}" Grid.Column="1" Grid.Row="1"
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <Button Content="Выход из викторины" Grid.Column="3" Grid.Row="1"
+                        Command="{Binding SaveQuizCommand}"/>
+
+                <Border BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Background="Aqua"
+                        AllowDrop="True">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Drop">
+                            <i:CallMethodAction MethodName="ImageDropEvent" TargetObject="{Binding}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
+                    <Image Source="{Binding QuizModel.ImageBytes, Converter={converter:FromBytes}}"/>
+                </Border>
+
+                <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Text="{Binding Quest}"/>
+                    <Button Grid.Column="2" Content="Добавить вопрос" 
+                            Command="{Binding AddQuizNodeCommand}"/>
+                </Grid>
+
+                <ListBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding QuizModel.QuizNodes}"
+                         HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
+                         ScrollViewer.IsDeferredScrollingEnabled="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox VerticalContentAlignment="Center" Grid.Row="0" Text="{Binding Question}"/>
+
+                                <Expander Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+                                    <Grid>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.1*"/>
+                                            <!--Текст вопроса и кнопка-->
+                                            <RowDefinition Height="0.05*"/>
+                                            <!--Отступ-->
+                                            <RowDefinition Height="1*"/>
+                                            <!--Картинка икнопка удаления-->
+                                            <RowDefinition Height="0.05*"/>
+                                            <!--Отступ-->
+                                            <RowDefinition Height="1*"/>
+                                            <!--Варианты ответов-->
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="0.1*"/>
+                                            <ColumnDefinition Width="0.2*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox Text="{Binding StrAnswCreation}" Grid.Row="0" Grid.Column="0"/>
+
+                                        <Button Content="Добавить ответ" Grid.Column="2" Grid.Row="0"
+                                                Command="{Binding Path=DataContext.AddAnswerCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
+                                                UpdateSourceTrigger=Default}" CommandParameter="{Binding}"/>
+
+                                        <Rectangle Grid.Column="0" Grid.Row="2" Fill="Aqua"/>
+
+                                        <!--<Border BorderThickness="1" Grid.Column="0" Grid.Row="2" Background="Aqua"
+                                                AllowDrop="True">
+
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Drop">
+                                                    <i:CallMethodAction MethodName="ImageQuestionDropEvent" TargetObject="{Binding}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+
+                                            <Image Source="{Binding QuestImageBytes, Converter={converter:FromBytes}}"/>
+                                        </Border>-->
+
+                                    </Grid>
+
+                                </Expander>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+            </Grid>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

@@ -1,9 +1,8 @@
 ﻿using AAAcasino.Infrastructure.Commands;
 using AAAcasino.Models;
+using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
-using Microsoft.Identity.Client;
-using System.CodeDom;
-using System.IO.Packaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,26 +32,7 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             get => _quest;
             set => Set(ref _quest, value);
         }
-        private string? _answStr;
-        public string AnswStr
-        {
-            get => _answStr;
-            set => Set(ref _answStr, value);
-        }
 
-        private QuizNode? _selectedQuest = null;
-        public QuizNode? SelectedQuest
-        {
-            get => _selectedQuest;
-            set => Set(ref _selectedQuest, value);
-        }
-
-        private Answer _selectedAnswer = new Answer(null);
-        public Answer SelectedAnswer
-        {
-            get => _selectedAnswer;
-            set => Set(ref _selectedAnswer, value);
-        }
         #region command
         public ICommand AddQuizNodeCommand { get; set; }
         private void OnAddQuizNodeCommand(object param)
@@ -60,6 +40,14 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             QuizNode node = new QuizNode();
             node.Question = Quest;
             QuizModel.AddQuizNode(node);
+            Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizModels.Update(QuizModel);
+                    db.SaveChanges();
+                }
+            });
         }
         private bool CanAddQuizNodeCommand(object param) => true;
         public ICommand SaveQuizCommand { get; set; }
@@ -68,14 +56,17 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             Task.Run(() =>
             {
                 int existance = (from q in MainWindowViewModel.applicationContext.quizModels.ToList()
-                                 where q == QuizModel
+                                 where q.ID == QuizModel.ID
                                  select q).Count();
-                if (existance > 0)
-                    MainWindowViewModel.applicationContext.Update(QuizModel);
-                else
-                    MainWindowViewModel.applicationContext.Add(QuizModel);
+                using(ApplicationContext db = new ApplicationContext())
+                {
+                    if (existance > 0)
+                        db.quizModels.Update(QuizModel);
+                    else
+                        db.quizModels.Add(QuizModel);
 
-                MainWindowViewModel.applicationContext.SaveChanges();
+                    db.SaveChanges();
+                }
             });
             MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.ADMIN_PAGE];
         }
@@ -83,27 +74,94 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
         public ICommand AddAnswerCommand { get; set; }
         private void OnAddAnswerCommand(object parameter)
         {
-            if (_selectedQuest != null)
+            int indexQN = QuizModel.QuizNodes.IndexOf(parameter as QuizNode);
+            QuizModel.QuizNodes[indexQN].Answers.Add(new Answer(QuizModel.QuizNodes[indexQN].StrAnswCreation));
+            QuizModel.QuizNodes[indexQN].StrAnswCreation = "";
+
+            Task.Run(() =>
             {
-                _selectedQuest.Answers.Add(new Answer(AnswStr));
-                AnswStr = string.Empty;
-            }
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizModels.Update(QuizModel);
+                    db.SaveChanges();
+                }
+            });
         }
-        private bool CanAddAnswerCommand(object parameter) => AnswStr != "";
+        private bool CanAddAnswerCommand(object parameter) => 
+            (parameter as QuizNode).StrAnswCreation != "" && (parameter as QuizNode).StrAnswCreation != null;
         public ICommand RemoveQuizNodeCommand { get; set; }
         private void OnRemoveQuizNodeCommand(object parameter)
         {
-            _quizModel.QuizNodes.Remove(SelectedQuest);
-            AnswStr = string.Empty;
+            QuizModel.QuizNodes.Remove(parameter as QuizNode);
+            Task.Run(() =>
+            {
+                var quest = parameter as QuizNode;
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    foreach (var answ in quest.Answers)
+                        db.answers.Remove(answ);
+
+                    db.quizNodes.Remove(quest);
+                    db.SaveChanges();
+                }
+            });
+
             Quest = string.Empty;
         }
-        private bool CanRemoveQuizNodeCommand(object parameter) => _selectedQuest != null;
+        private bool CanRemoveQuizNodeCommand(object parameter) => true;
         public ICommand RemoveAnswerCommand { get; set; }
         private void OnRemoveAnswerCommand(object parameter)
         {
-            _selectedQuest.Answers.Remove(_selectedAnswer);
+            var answer = parameter as Answer;
+
+            int indexQN = -1;
+            foreach (var qn in QuizModel.QuizNodes)
+            {
+                bool isFind = false;
+                foreach (var answ in qn.Answers)
+                {
+                    if(answ ==  answer)
+                    {
+                        isFind = true;
+                        indexQN = QuizModel.QuizNodes.IndexOf(qn);
+                        break;
+                    }
+                }
+
+                if (isFind)
+                    break;
+            }
+
+            QuizModel.QuizNodes[indexQN].Answers.Remove(answer);
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.answers.Remove(answer);
+                db.SaveChanges();
+            }
         }
-        private bool CanRemoveAnswerCommand(object parameter) => _selectedAnswer != null && _selectedQuest != null;
+        private bool CanRemoveAnswerCommand(object parameter) => true;
+        #endregion
+        #region events
+        public void ImageDropEvent(object sender, DragEventArgs e)
+        {
+            string[] path = (string[])e.Data.GetData(DataFormats.FileDrop);
+            QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
+
+            Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizModels.Update(QuizModel);
+                    db.SaveChanges();
+                }
+            });
+        }
+        public void ImageQuestionDropEvent(object sender, DragEventArgs e)
+        {
+            string[] path = (string[])e.Data.GetData(DataFormats.FileDrop);
+            QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
+        }
         #endregion
         public CreationQuizViewModel()
         {
