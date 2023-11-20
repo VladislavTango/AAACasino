@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\**" />
+    <EmbeddedResource Remove="Components\**" />
+    <None Remove="Components\**" />
+    <Page Remove="Components\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\OneHandMat-2.jpg" />
     <None Remove="Resources\OneHandMat-3.jpg" />
     <None Remove="Resources\OneHandMat-4.jpg" />
@@ -36,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
     <Folder Include="Data\" />
     <Folder Include="Infrastructure\Commands\ClientCommands\" />
     <Folder Include="Infrastructure\Commands\SlotCommands\" />

@@ -73,7 +73,7 @@ namespace AAAcasino.ViewModels
         private bool CanInitCommand(object parameter) => _init;
         private void OnInitCommand(object parameter)
         {
-            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.LOGIN_PAGE];
             SelectedPageViewModel.MainViewModel = this;
             _init = false;
             ImgVis = Visibility.Collapsed;

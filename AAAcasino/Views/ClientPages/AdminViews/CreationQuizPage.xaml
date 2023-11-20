@@ -36,7 +36,7 @@
                 <Button Content="Выход из викторины" Grid.Column="3" Grid.Row="1"
                         Command="{Binding SaveQuizCommand}"/>
 
-                <Border BorderThickness="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Background="Aqua"
+                <Border BorderThickness="1" Grid.Column="1" Grid.Row="3" Background="Aqua"
                         AllowDrop="True">
 
                     <i:Interaction.Triggers>
@@ -47,6 +47,23 @@
                     
                     <Image Source="{Binding QuizModel.ImageBytes, Converter={converter:FromBytes}}"/>
                 </Border>
+
+                <Grid Grid.Row="3" Grid.Column="3">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.05*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button Content="Добавить" Grid.Row="0"
+                            Command="{Binding SetImgQMFromFileSysCommand}"/>
+                    
+                    <Button Content="Удалить" Grid.Row="2"
+                            Command="{Binding RemoveImageQMCommand}"/>
+
+                </Grid>
 
                 <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3">
 
@@ -64,6 +81,11 @@
                 <ListBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding QuizModel.QuizNodes}"
                          HorizontalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
                          ScrollViewer.IsDeferredScrollingEnabled="True">
+                    <!--<ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="1"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>-->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -105,19 +127,43 @@
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
                                                 UpdateSourceTrigger=Default}" CommandParameter="{Binding}"/>
 
-                                        <Rectangle Grid.Column="0" Grid.Row="2" Fill="Aqua"/>
+                                            <Border BorderThickness="1" Grid.Column="0" Grid.Row="2" Background="Aqua"
+                                                AllowDrop="True" MinHeight="25">
 
-                                        <!--<Border BorderThickness="1" Grid.Column="0" Grid.Row="2" Background="Aqua"
-                                                AllowDrop="True">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Drop">
+                                                        <!--Не работает колл метода-->
+                                                        <i:CallMethodAction MethodName="ImageQuestionDropEvent" TargetObject="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
 
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Drop">
-                                                    <i:CallMethodAction MethodName="ImageQuestionDropEvent" TargetObject="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                                <Image Source="{Binding QuestImageBytes, Converter={converter:FromBytes}}"/>
+                                            </Border>
 
-                                            <Image Source="{Binding QuestImageBytes, Converter={converter:FromBytes}}"/>
-                                        </Border>-->
+                                            <Button Grid.Column="2" Grid.Row="2" Content="Удалить иозображение"
+                                                    Command="{Binding Path=DataContext.RmImgFromQnCommand,
+                                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox},
+                                                    UpdateSourceTrigger=Default}" CommandParameter="{Binding}"/>                
+
+                                        <ListBox ItemsSource="{Binding Answers}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                                                 HorizontalContentAlignment="Stretch">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="0.5*"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        
+                                                        <TextBox Text="{Binding Str}" Grid.Column="0"/>
+
+                                                        <CheckBox IsChecked="{Binding IsCorrect}" Content="Верный ответ" Grid.Column="2"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
 
                                     </Grid>
 

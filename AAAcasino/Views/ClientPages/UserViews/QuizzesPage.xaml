@@ -4,36 +4,50 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels"
+                    xmlns:converter="clr-namespace:AAAcasino.Infrastructure">
     
     <DataTemplate DataType="{x:Type vm:QuizzesViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:QuizzesViewModel}">
-            <ListBox ItemsSource="{Binding QuizModels}">
+            
+            <ListBox ItemsSource="{Binding QuizModels}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <UniformGrid Columns="2"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Button Command="{Binding Path=DataContext.GoToQuizCommand, 
-                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, 
-                            UpdateSourceTrigger=Default}" 
-                                CommandParameter="{Binding}">
+
+                        <Button Command="{Binding Path=DataContext.GoToQuizCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, UpdateSourceTrigger=Default}"
+                                CommandParameter="{Binding}"  MaxHeight="300" MaxWidth="400">
                             <Button.Content>
                                 <Grid>
+
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition Height="0.2*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Content="{Binding Name}"/>
-                                    <Label Content="{Binding Reward}"/>
+
+                                    <Image Source="{Binding ImageBytes, Converter={converter:FromBytes}}"
+                                           Grid.Row="0"/>
+
+                                    <Label Content="{Binding Name}" Grid.Row="1"/>
+                                    <TextBlock Text="{Binding Reward}" Grid.Row="2"/>
+
                                 </Grid>
                             </Button.Content>
                         </Button>
+                        
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                    
             </ListBox>
+            
         </Grid>
     </DataTemplate>
 

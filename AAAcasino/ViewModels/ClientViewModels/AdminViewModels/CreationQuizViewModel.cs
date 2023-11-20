@@ -2,8 +2,10 @@
 using AAAcasino.Models;
 using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
+using Microsoft.Win32;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -141,12 +143,27 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             }
         }
         private bool CanRemoveAnswerCommand(object parameter) => true;
-        #endregion
-        #region events
-        public void ImageDropEvent(object sender, DragEventArgs e)
+        public ICommand RmImgFromQnCommand { get; }
+        private void OnRmImgFromQnCommand(object parameter)
         {
-            string[] path = (string[])e.Data.GetData(DataFormats.FileDrop);
-            QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
+            int indexQN = QuizModel.QuizNodes.IndexOf(parameter as QuizNode);
+
+            QuizModel.QuizNodes[indexQN].QuestImageBytes = null;
+
+            Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    db.quizNodes.Update(QuizModel.QuizNodes[indexQN]);
+                    db.SaveChanges();
+                }
+            });
+        }
+        private bool CanRmImgFromQnCommand(object parameter) => true;
+        public ICommand RemoveImageQMCommand { get; }
+        private void OnRemoveImageQMCommand(object parameter)
+        {
+            QuizModel.ImageBytes = null;
 
             Task.Run(() =>
             {
@@ -157,10 +174,63 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
                 }
             });
         }
-        public void ImageQuestionDropEvent(object sender, DragEventArgs e)
+        private bool CanRemoveImageQMCommand(object parameter) => QuizModel.ImageBytes != null;
+        public ICommand SetImgQMFromFileSysCommand { get; }
+        private void OnSetImgQMFromFileSysCommand(object parameter)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.ShowDialog();
+            string[] path = fileDialog.FileNames;
+
+            if (IsImage(path[0]))
+            {
+                QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
+
+                Task.Run(() =>
+                {
+                    using (ApplicationContext db = new ApplicationContext())
+                    {
+                        db.quizModels.Update(QuizModel);
+                        db.SaveChanges();
+                    }
+                });
+            }
+        }
+
+        private bool CanSetImgQMFromFileSysCommand(object parameter) => true;
+        #endregion
+        //Func for check type file
+        private bool IsImage(string? path)
+        {
+            Regex[] regexes = { new Regex(@"\w*\.jpg$"), new Regex(@"\w*\.jpeg$"),
+            new Regex(@"\w*\.png$")};
+
+            foreach (var regex in regexes)
+            {
+                if(regex.IsMatch(path))
+                    return true;
+            }
+
+            return false;
+        }
+        #region events
+        public void ImageDropEvent(object sender, DragEventArgs e)
         {
             string[] path = (string[])e.Data.GetData(DataFormats.FileDrop);
-            QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
+
+            if (IsImage(path[0]))
+            {
+                QuizModel.ImageBytes = File.ReadAllBytes(path[0]);
+
+                Task.Run(() =>
+                {
+                    using (ApplicationContext db = new ApplicationContext())
+                    {
+                        db.quizModels.Update(QuizModel);
+                        db.SaveChanges();
+                    }
+                });
+            }
         }
         #endregion
         public CreationQuizViewModel()
@@ -170,6 +240,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             AddAnswerCommand = new LamdaCommand(OnAddAnswerCommand, CanAddAnswerCommand);
             RemoveQuizNodeCommand = new LamdaCommand(OnRemoveQuizNodeCommand, CanRemoveQuizNodeCommand);
             RemoveAnswerCommand = new LamdaCommand(OnRemoveAnswerCommand, CanRemoveAnswerCommand);
+            SetImgQMFromFileSysCommand = new LamdaCommand(OnSetImgQMFromFileSysCommand, CanSetImgQMFromFileSysCommand);
+            RemoveImageQMCommand = new LamdaCommand(OnRemoveImageQMCommand, CanRemoveImageQMCommand);
         }
     }
 }
