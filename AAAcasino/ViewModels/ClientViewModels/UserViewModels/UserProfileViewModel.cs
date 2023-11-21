@@ -132,11 +132,11 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
 
 
 
-            Name = MainViewModel.User.Username;
-            balance = MainViewModel.User.Balance.ToString();
-            TotalLoose = MainViewModel.User.History.TotalLoose.ToString();
-            TotalWin = MainViewModel.User.History.TotalWin.ToString();
-            TotalPlus = MainViewModel.User.History.TotalPlus.ToString();
+            Name = $"Вас зовут: {MainViewModel.User.Username}";
+            balance = $"Ваш Баланс: {MainViewModel.User.Balance.ToString()}";
+            TotalLoose = $"Всего выйгранно игр: {MainViewModel.User.History.TotalLoose.ToString()}";
+            TotalWin = $"Всего проигранно игр: {MainViewModel.User.History.TotalWin.ToString()}";
+            TotalPlus = $"Всего выйгранно денег: {MainViewModel.User.History.TotalPlus.ToString()}";
 
         }
         public UserProfileViewModel() {

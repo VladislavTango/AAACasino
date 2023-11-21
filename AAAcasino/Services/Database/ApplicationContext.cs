@@ -18,14 +18,14 @@ namespace AAAcasino.Services.Database
         {
             using(ApplicationContext db = new ApplicationContext())
             {
-                return (from um in db.userModels.ToList()
+                return (from um in db.userModels.Include(hm => hm.History).ToList()
                         where username == um.Username && password == um.Password
                         select um).ToList().FirstOrDefault();
             }
         }
         public ApplicationContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }

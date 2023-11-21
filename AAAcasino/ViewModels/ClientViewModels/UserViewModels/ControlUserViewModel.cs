@@ -17,7 +17,9 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         public MainWindowViewModel MainViewModel { get; set; }
         public void SetAnyModel(object? model)
         {
-            _userSelectedPage = MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
+            _userSelectedPage = MainViewModel.ClientPageViewModels[(int)NumberClientPage.QUIZZES_PAGE];
+            _userSelectedPage.MainViewModel = MainViewModel;
+            _userSelectedPage.SetAnyModel(null);
         }
         #endregion
         #region Content component
@@ -38,11 +40,12 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         public ICommand SwitchToProfileCommand { get; set; }
         private void OnSwitchToProfileCommand(object parameter)
         {
-            UserSelectedPage = MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
+            UserSelectedPage = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PROFILE];
             UserSelectedPage.MainViewModel = MainViewModel;
+            UserSelectedPage.SetAnyModel(null);
         }
         private bool CanSwitchToProfileCommand(object parameter)
-            => UserSelectedPage != MainViewModel.ClientPageViewModels[(int)NumberClientPage.PROFILE_PAGE];
+            => UserSelectedPage != MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
         public ICommand SwitchToQuizzesCommand { get; set; }
         private void OnSwitchToQuizzesCommand(object parameter)
         {
