@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Rectangle Grid.Column="1" Grid.Row="1"
-               Fill="#696969" RadiusX="15" RadiusY="15"/>
+               Fill="#696969"/>
 
                 <Grid Grid.Row="1" Grid.Column="1">
 
@@ -43,15 +43,12 @@
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border  Grid.Row="1" Grid.Column="1" CornerRadius="10" Background="#D3D3D3">
-                        <TextBox Text="{Binding UserName}" TextAlignment="Center" VerticalContentAlignment="Center"
-                                 MaxLength="16" FontSize="14" Background="Transparent" BorderThickness="0"/>
-                    </Border>
+                    <TextBox Text="{Binding UserName}" TextAlignment="Center" VerticalContentAlignment="Center"
+                                 Grid.Row="1" Grid.Column="1"
+                                 MaxLength="16" FontSize="14"/>
 
-                    <Border  Grid.Row="3" Grid.Column="1" CornerRadius="10" Background="#D3D3D3">
-                        <PasswordBox Name="Password" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                     MaxLength="16" FontSize="14" Background="Transparent" BorderThickness="0"/>
-                    </Border>
+                    <PasswordBox Name="Password" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                     MaxLength="16" FontSize="14" Grid.Row="3" Grid.Column="1"/>
 
                     <Label Content="{Binding MessengeLine}" Foreground="Red" Grid.Column="1" Grid.Row="4"
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
@@ -66,10 +63,8 @@
                             <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="1" CornerRadius="10" Background="#D3D3D3" Focusable="True" Cursor="Hand">
-                            <Button Content="Вход" BorderThickness="0" Background="Transparent"
-                                    Command="{Binding LogInCommand}" CommandParameter="{Binding ElementName=Password}"/>
-                        </Border>
+                        <Button Content="Вход" BorderThickness="0" Grid.Column="1"
+                                Command="{Binding LogInCommand}" CommandParameter="{Binding ElementName=Password}"/>
 
                         <Label Content="Регистрация" Grid.Column="3" FontSize="12"  Cursor="Hand"
                                VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -80,9 +75,6 @@
                             </i:Interaction.Triggers>
                         </Label>
                     </Grid>
-
-                    <Label Content="Восстановить пароль" Grid.Row="6" Grid.Column="1" Cursor="Hand"
-                           HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 </Grid>
             </Grid>
         </Grid>

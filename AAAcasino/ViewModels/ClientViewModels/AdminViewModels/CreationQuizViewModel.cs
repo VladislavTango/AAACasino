@@ -160,6 +160,30 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             });
         }
         private bool CanRmImgFromQnCommand(object parameter) => true;
+        public ICommand SetImgQnFromFSCommand { get; }
+        private void OnSetImgQnFromFSCommand(object parameter)
+        {
+            int indexQN = QuizModel.QuizNodes.IndexOf(parameter as QuizNode);
+
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.ShowDialog();
+            string[] path = fileDialog.FileNames;
+
+            if (IsImage(path[0]))
+            {
+                QuizModel.QuizNodes[indexQN].QuestImageBytes = File.ReadAllBytes(path[0]);
+
+                Task.Run(() =>
+                {
+                    using (ApplicationContext db = new ApplicationContext())
+                    {
+                        db.quizModels.Update(QuizModel);
+                        db.SaveChanges();
+                    }
+                });
+            }
+        }
+        private bool CanSetImgQnFromFSCommand(object parameter) => true;
         public ICommand RemoveImageQMCommand { get; }
         private void OnRemoveImageQMCommand(object parameter)
         {
@@ -242,6 +266,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.AdminViewModels
             RemoveAnswerCommand = new LamdaCommand(OnRemoveAnswerCommand, CanRemoveAnswerCommand);
             SetImgQMFromFileSysCommand = new LamdaCommand(OnSetImgQMFromFileSysCommand, CanSetImgQMFromFileSysCommand);
             RemoveImageQMCommand = new LamdaCommand(OnRemoveImageQMCommand, CanRemoveImageQMCommand);
+            SetImgQnFromFSCommand = new LamdaCommand(OnSetImgQnFromFSCommand, CanSetImgQnFromFSCommand);
+            RmImgFromQnCommand = new LamdaCommand(OnRmImgFromQnCommand, CanRmImgFromQnCommand);
         }
     }
 }

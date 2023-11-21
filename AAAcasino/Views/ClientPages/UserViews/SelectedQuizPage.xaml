@@ -4,23 +4,28 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels"
+                    xmlns:converter="clr-namespace:AAAcasino.Infrastructure">
 
     <DataTemplate DataType="{x:Type vm:SelectedQuizViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:SelectedQuizViewModel}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.05*"/>
+                <RowDefinition Height="0.75*"/>
+                <RowDefinition Height="0.05*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="0.25*"/>
             </Grid.RowDefinitions>
             
             <Label Content="{Binding CurrentQuestion.Question}" Grid.Row="0"/>
-            <ListBox ItemsSource="{Binding CurrentQuestion.Answers}" Grid.Row="1">
+            <Image Source="{Binding CurrentQuestion.QuestImageBytes, Converter={converter:FromBytes}}"/>
+            <ListBox ItemsSource="{Binding CurrentQuestion.Answers}" Grid.Row="4">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
+                            <CheckBox IsChecked="{Binding UserAnswer}" Margin="5 0 0 0"/>
                             <TextBlock Text="{Binding Str}"/>
-                            <CheckBox IsChecked="{Binding UserAnswer}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -13,7 +13,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.05*"/>
                         <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="0.05*"/>
                     </Grid.ColumnDefinitions>
                     <Button Command="{Binding SwitchToProfileCommand}" Content="ПРОФИЛЬ"
                 Grid.Column="0"/>
@@ -21,6 +23,10 @@
                 Grid.Column="1"/>
                     <Button Command="{Binding SwitchToSlotsCommand}" Content="СЛОТЫ"
                 Grid.Column="2"/>
+                    <Border CornerRadius="10" Grid.Column="4" Background="LightSlateGray">
+                        <Label Content="{Binding MainViewModel.User.Balance}" FontSize="16" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
                 </Grid>
                 <Grid DockPanel.Dock="Bottom">
                     <ContentPresenter Content="{Binding UserSelectedPage}"/>
