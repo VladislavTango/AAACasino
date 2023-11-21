@@ -1,4 +1,5 @@
 ﻿using AAAcasino.Infrastructure.Commands;
+using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using AAAcasino.ViewModels.ClientViewModels.AdminViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -19,6 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace AAAcasino.ViewModels.SlotViewModels
 {
@@ -75,7 +77,9 @@ namespace AAAcasino.ViewModels.SlotViewModels
         private bool CanBackToMenuCommand(object parameter) => true;
         private void OnBackToMenuCommand(object parameter)
         {
-            //хуй говна поклюй
+            MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+            MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
+            MainViewModel.SelectedPageViewModel.SetAnyModel(null);
         }
         ObservableCollection<Button> SetNewBtn(ObservableCollection<Button> but) {
             but = new ObservableCollection<Button>();
@@ -133,9 +137,11 @@ namespace AAAcasino.ViewModels.SlotViewModels
             if (wheel[index] == "0")
                 return "green";
             if (Convert.ToInt16(wheel[index]) % 2 == 0) return "red";
-            if (Convert.ToInt16(wheel[index]) % 2 != 0) return "black";
-            return "отсоси уёбище";
+             return "black";
+            
         }
+
+
         string NormalFormOfTextBox(string str)
         {
 
@@ -339,6 +345,8 @@ namespace AAAcasino.ViewModels.SlotViewModels
         }
         async void Go(int num)
         {
+            double WBet = 0;
+            double LBet=0;
             for (int i = 1; i<=num; i++)
             {
                 await Task.Run(async () =>
@@ -351,16 +359,23 @@ namespace AAAcasino.ViewModels.SlotViewModels
             for (int i = 0; i < ScetList.Count(); i++) {
                 if (ScetList[i] < 36)
                 {
-                    if (ScetList[0] ==0)
+                    if (ScetList[0] == 0)
+                    {
                         MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 50;
-                    if (ScetList[i] == Convert.ToInt32(number_3)&&ScetList[i]!=0)
+                        WBet += BetList[i] * 50;
+                    }
+                    if (ScetList[i] == Convert.ToInt32(number_3) && ScetList[i] != 0)
+                    {
                         MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 35;
+                        WBet += BetList[i] * 35;
+                    }
                 }
                 else {
                     switch (ScetList[i]) {
                         case 37: {
                                 if (numbers[37].Contains(Convert.ToInt16(number_3))) {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 3;
+                                    WBet += BetList[i]*3;
                                 }
                                 break; }
                         case 38:
@@ -368,6 +383,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[38].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 3;
+                                    WBet += BetList[i] * 3;
                                 }
                                 break;
                             }
@@ -375,6 +391,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                             {
                                 if (numbers[39].Contains(Convert.ToInt16(number_3)))
                                 {
+                                    WBet += BetList[i]*3;
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 3;
                                 }
                                 break;
@@ -383,6 +400,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                             {
                                 if (numbers[40].Contains(Convert.ToInt16(number_3)))
                                 {
+                                    WBet += BetList[i] * 3;
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 3;
 
                                 }
@@ -393,6 +411,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[41].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 6;
+                                    WBet += BetList[i] * 6;
 
                                 }
                                 break;
@@ -402,6 +421,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[42].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 2;
+                                    WBet += BetList[i] * 2;
 
                                 }
                                 break;
@@ -411,6 +431,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[43].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 3;
+                                    WBet += BetList[i] * 3;
 
 
                                 }
@@ -421,6 +442,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if ((Convert.ToInt16(number_3)%2==0))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 2;
+                                    WBet += BetList[i] * 2;
 
                                 }
                                 break;
@@ -430,6 +452,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (Convert.ToInt16(number_3)%2!=0)
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 2;
+                                    WBet += BetList[i] * 2;
 
                                 }
                                 break;
@@ -439,6 +462,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[46].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 3;
+                                    WBet += BetList[i] * 3;
 
                                 }
                                 break;
@@ -448,6 +472,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[47].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 2;
+                                    WBet += BetList[i] * 2;
 
                                 }
                                 break;
@@ -457,15 +482,37 @@ namespace AAAcasino.ViewModels.SlotViewModels
                                 if (numbers[48].Contains(Convert.ToInt16(number_3)))
                                 {
                                     MainViewModel.User.Balance = MainViewModel.User.Balance + BetList[i] * 6;
+                                    WBet += BetList[i] * 6;
 
                                 }
                                 break;
                             }
-
+                        default: {
+                                LBet += BetList[i];
+                                break;
+                            }
 
 
                     }
+                   
                 }
+            }
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                
+               MainViewModel.User.History.TotalPlus += WBet;
+               MainViewModel.User.History.RouletteWMoney += WBet;
+                if (WBet == 0)
+                {
+                    MainViewModel.User.History.RouletteLgames += 1;
+                }
+                else
+                    MainViewModel.User.History.RouletteWgames += 1;
+               MainViewModel.User.History.TotalPlus -= LBet;
+               MainViewModel.User.History.RouletteLMoney += LBet;
+                
+                db.Update(MainViewModel.User);
+                db.SaveChanges();
             }
             balance = $"Баланс {MainViewModel.User.Balance}";
 

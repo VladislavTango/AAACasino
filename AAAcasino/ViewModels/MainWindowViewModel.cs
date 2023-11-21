@@ -20,6 +20,7 @@ namespace AAAcasino.ViewModels
         SELECTED_QUIZ_PAGE = 6,
         ADMIN_PAGE = 7,
         CREATION_PANEL_PAGE = 8,
+        USER_PROFILE=9,
     }
     enum NumberSlotPage
     {
@@ -73,8 +74,9 @@ namespace AAAcasino.ViewModels
         private bool CanInitCommand(object parameter) => _init;
         private void OnInitCommand(object parameter)
         {
-            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+            SelectedPageViewModel = ClientPageViewModels[(int)NumberClientPage.USER_PROFILE];
             SelectedPageViewModel.MainViewModel = this;
+            SelectedPageViewModel.SetAnyModel(null);
             _init = false;
             ImgVis = Visibility.Collapsed;
         }

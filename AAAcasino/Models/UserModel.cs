@@ -51,5 +51,7 @@ namespace AAAcasino.Models
             _balance = 50;
             _history = new HistoryModel();
         }
+
+     
     }
 }

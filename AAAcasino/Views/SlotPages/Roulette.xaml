@@ -7,21 +7,21 @@
                     xmlns:vm="clr-namespace:AAAcasino.ViewModels.SlotViewModels">
     <DataTemplate DataType="{x:Type vm:RouletteViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:RouletteViewModel}">
-            <Grid ShowGridLines="true">
+            <Grid ShowGridLines="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="7*"/>
                     <RowDefinition Height="10*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="2" ShowGridLines="True">
+                <Grid Grid.Row="2" ShowGridLines="False">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0" ShowGridLines="True">
+                    <Grid Grid.Column="0" ShowGridLines="False">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -52,7 +52,7 @@
                         
 
                     </Grid>
-                    <Grid Grid.Column="2" ShowGridLines="true">
+                    <Grid Grid.Column="2" ShowGridLines="False">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="6*"/>

@@ -8,6 +8,25 @@
     
     <DataTemplate DataType="{x:Type vm:SlotsViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:SlotsViewModel}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button BorderBrush="Black" BorderThickness="5" Grid.Row="0" Grid.Column="0" CommandParameter="0" Command="{Binding Path=GoToQuizCommand}" >
+                <Image Source="\Resources\1.jpg" Stretch="Fill"/>
+            </Button>
+            <Button BorderBrush="Black" BorderThickness="5" Grid.Row="0" Grid.Column="1" CommandParameter="1" Command="{Binding Path=GoToQuizCommand}">
+                <Image Source="\Resources\2.jpg" Stretch="Fill"/>
+            </Button>
+            <Button BorderBrush="Black" BorderThickness="5" Grid.Row="1"  Grid.Column="0" CommandParameter="2" Command="{Binding Path=GoToQuizCommand}">
+                <Image Source="\Resources\3.jpg" Stretch="Fill"/>
+            </Button>
+            <TextBlock FontSize="72" Text="Comming soon..." Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

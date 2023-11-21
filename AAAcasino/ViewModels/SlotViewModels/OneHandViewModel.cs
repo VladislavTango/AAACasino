@@ -1,4 +1,6 @@
 ﻿using AAAcasino.Infrastructure.Commands;
+using AAAcasino.Models;
+using AAAcasino.Services.Database;
 using AAAcasino.ViewModels.Base;
 using AAAcasino.ViewModels.ClientViewModels.AdminViewModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -83,7 +85,9 @@ namespace AAAcasino.ViewModels.SlotViewModels
         private bool CanBackToMenuCommand(object parameter) => true;
         private void OnBackToMenuCommand(object parameter)
         {
-            //хуй говна поклюй
+            MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+            MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
+            MainViewModel.SelectedPageViewModel.SetAnyModel(null);
         }
 
         async void Go(int num,int row)
@@ -234,7 +238,8 @@ namespace AAAcasino.ViewModels.SlotViewModels
         public MainWindowViewModel MainViewModel { get; set; }
 
         
-        void Winner() {
+        async void Winner() {
+            bool WorL = false;
             string[] str = squares[3].ToString().Split("pack://application:,,,");
             if (squares[3].ToString() == squares[4].ToString() && squares[4].ToString() == squares[5].ToString()) {
                 if (str[1] == images[0].ToString()) (NowBet) *= 10;
@@ -246,6 +251,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                 if (str[1] == images[6].ToString()) (NowBet) *= 80; 
                 if (str[1] == images[7].ToString()) (NowBet) *= 100;
                 if (str[1] == images[8].ToString()) (NowBet) *= 150;
+                WorL = true;
             }
             else if (squares[3].ToString() == squares[4].ToString()) {
                 MessageBox.Show("да");
@@ -257,10 +263,34 @@ namespace AAAcasino.ViewModels.SlotViewModels
                 if (str[1] == images[6].ToString())(NowBet) *= 8;
                 if (str[1] == images[7].ToString())(NowBet) *= 10;
                 if (str[1] == images[8].ToString())(NowBet) *= 15;
-
+                WorL = true;
             }
             else if (str[1] != squares[4].ToString()) NowBet = 0;
                 balance = $"Баланс: {(double)MainViewModel.User.Balance+NowBet}";
+            try
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    if (WorL)
+                    {
+                        MainViewModel.User.History.OneHandWgames += 1;
+                        MainViewModel.User.History.TotalPlus += NowBet;
+                        MainViewModel.User.History.OneHandWMoney += NowBet;
+                    }
+                    else
+                    {
+                        MainViewModel.User.History.OneHandLgames += 1;
+                        MainViewModel.User.History.TotalPlus -= NowBet;
+                        MainViewModel.User.History.OneHandLMoney += Convert.ToDouble(Bet);
+                    }
+                    db.Update(MainViewModel.User);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("ПОМЕДЛЕННИЕ");
+            }
         }
     }
 

@@ -30,6 +30,7 @@ namespace AAAcasino
                         new SelectedQuizViewModel(),
                         new AdminViewModel(),
                         new CreationQuizViewModel(),
+                        new UserProfileViewModel(),
                     },
                     SlotPageViewModels = new List<IPageViewModel>
                     {

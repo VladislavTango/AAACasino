@@ -7,6 +7,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using System;
+using AAAcasino.Services.Database;
+using System.Threading.Tasks;
 
 namespace AAAcasino.ViewModels.SlotViewModels
 {
@@ -18,9 +20,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
         public MainWindowViewModel MainViewModel { get; set; }
 
         public void SetAnyModel(object? model)
-        {
-            Buttons = CreateButtons(Buttons);
-           
+        {         
             balanse = $"Баланс: {MainViewModel.User.Balance}";
         }
         #endregion
@@ -103,6 +103,8 @@ namespace AAAcasino.ViewModels.SlotViewModels
             ColorChange = new LamdaCommand(OnColorChangeCommand, CanColorChangeCommand);
             Start = new LamdaCommand(OnStartCommand, CanStartCommand);
             BackToMenu = new LamdaCommand(OnBackToMenuCommand, CanBackToMenuCommand);
+            Buttons = CreateButtons(Buttons);
+
         }
 
         public ICommand ColorChange { get; }
@@ -124,6 +126,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                     if (field[num] == false)
                     {
                         GameStarted = false;
+                        Task.Run(() => ToDB(false));
                         StartColor = "LightBlue";
                         StartContent = "Старт";
                     }
@@ -222,6 +225,7 @@ namespace AAAcasino.ViewModels.SlotViewModels
                         GameStarted = false;
                         MainViewModel.User.Balance = Math.Round(Convert.ToDouble(Bid) * ThisMn + MainViewModel.User.Balance, 2);
                         balanse = $"баланс={MainViewModel.User.Balance}";
+                        Task.Run(() => ToDB(true));
                         StartColor = "LightBlue";
                         StartContent = "Старт";
                     }
@@ -235,9 +239,35 @@ namespace AAAcasino.ViewModels.SlotViewModels
         private bool CanBackToMenuCommand(object parameter) => true;
         private void OnBackToMenuCommand(object parameter)
         {
-           //хуй говна поклюй
-        }
+            MainViewModel.SelectedPageViewModel = MainViewModel.ClientPageViewModels[(int)NumberClientPage.USER_PAGE];
+            MainViewModel.SelectedPageViewModel.MainViewModel = MainViewModel;
+            MainViewModel.SelectedPageViewModel.SetAnyModel(null);
+        
+    }
         #endregion
+        async void ToDB(bool WorL) {
+            try
+            {
+                await using (ApplicationContext db = new ApplicationContext())
+                {
+                    if (WorL)
+                    {
+                        MainViewModel.User.History.SlotWgames += 1;
+                        MainViewModel.User.History.TotalPlus += Math.Round(Convert.ToDouble(Bid) * ThisMn);
+                        MainViewModel.User.History.SlotWMoney += Math.Round(Convert.ToDouble(Bid) * ThisMn);
+                    }
+                    else
+                    {
+                        MainViewModel.User.History.SlotLgames += 1;
+                        MainViewModel.User.History.TotalPlus -= Math.Round(Convert.ToDouble(Bid));
+                        MainViewModel.User.History.SlotLMoney += Math.Round(Convert.ToDouble(Bid));
+                    }
+                    db.Update(MainViewModel.User);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("ПОМЕДЛЕННИЕ"); }
+        }
         void ToFalse()
         {
             for (int i = 0; i < 25; i++)

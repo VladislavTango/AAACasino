@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Views/ClientPages/UserViews/SelectedQuizPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/AdminViews/MainAdminPage.xaml"/>
                 <ResourceDictionary Source="Views/ClientPages/AdminViews/CreationQuizPage.xaml"/>
+                <ResourceDictionary Source="Views/ClientPages/UserViews/UserProfile.xaml"/>
                 <ResourceDictionary Source="Views/SlotPages/SlotMinesPage.xaml"/>
                 <ResourceDictionary Source="Views/SlotPages/Roulette.xaml"/>
                 <ResourceDictionary Source="Views/SlotPages/OneHand.xaml"/>
