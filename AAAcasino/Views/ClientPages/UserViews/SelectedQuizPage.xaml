@@ -4,28 +4,57 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels"
+                    xmlns:converter="clr-namespace:AAAcasino.Infrastructure">
 
     <DataTemplate DataType="{x:Type vm:SelectedQuizViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:SelectedQuizViewModel}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.05*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="0.05*"/>
+                <RowDefinition Height="0.75*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
             
-            <Label Content="{Binding CurrentQuestion.Question}" Grid.Row="0"/>
-            <ListBox ItemsSource="{Binding CurrentQuestion.Answers}" Grid.Row="1">
+            <Label Content="{Binding CurrentQuestion.Question}" Grid.Row="0" FontSize="16"/>
+            
+            <Image Source="{Binding CurrentQuestion.QuestImageBytes, Converter={converter:FromBytes}}" Grid.Row="2"/>
+            
+            <ListBox ItemsSource="{Binding CurrentQuestion.Answers}" Grid.Row="4">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Str}"/>
-                            <CheckBox IsChecked="{Binding UserAnswer}"/>
-                        </StackPanel>
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <CheckBox IsChecked="{Binding UserAnswer}" Grid.Column="0"/>
+                            <TextBlock Text="{Binding Str}" Grid.Column="2" FontSize="13"  Margin="10 0 0 0"/>
+                        </Grid>
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Ответить" Command="{Binding SendAnsweCommand}" Grid.Row="2"/>
+
+            <Grid Grid.Row="6">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.05*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Content="Ответить" Command="{Binding SendAnsweCommand}" Grid.Column="1"/>
+            </Grid>
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

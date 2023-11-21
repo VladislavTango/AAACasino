@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Rectangle Grid.Column="1" Grid.Row="1"
-                            Fill="#696969" RadiusX="15" RadiusY="15"/>
+                            Fill="#696969"/>
 
                 <Grid Grid.Row="1" Grid.Column="1">
 
@@ -45,27 +45,22 @@
                         <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border  Grid.Row="1" Grid.Column="1" CornerRadius="10" Background="#D3D3D3">
-                        <TextBox Text="{Binding Username}" TextAlignment="Center" VerticalContentAlignment="Center"
-                                 MaxLength="16" FontSize="14" Background="Transparent" BorderThickness="0"/>
-                    </Border>
+                    <TextBox Text="{Binding Username}" TextAlignment="Center" VerticalContentAlignment="Center"
+                                 MaxLength="16" FontSize="14" Grid.Row="1" Grid.Column="1"/>
 
-                    <Border  Grid.Row="3" Grid.Column="1" CornerRadius="10" Background="#D3D3D3">
-                        <PasswordBox Name="PasswordFirst" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                     MaxLength="16" FontSize="14" Background="Transparent" BorderThickness="0"/>
-                    </Border>
+                    <PasswordBox Name="PasswordFirst" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                     MaxLength="16" FontSize="14"  Grid.Row="3" Grid.Column="1"/>
 
-                    <Border  Grid.Row="5" Grid.Column="1" CornerRadius="10" Background="#D3D3D3">
-                        <PasswordBox Name="PasswordSecond" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                     MaxLength="16" FontSize="14" Background="Transparent" BorderThickness="0">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="LostFocus">
-                                    <i:InvokeCommandAction Command="{Binding SecondPBLostFocusCommand}" 
+                    <PasswordBox Name="PasswordSecond" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                     MaxLength="16" FontSize="14" Grid.Row="5" Grid.Column="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding SecondPBLostFocusCommand}" 
                                                            CommandParameter="{Binding ElementName=PasswordSecond}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </PasswordBox>
-                    </Border>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </PasswordBox>
+
 
                     <Label Content="{Binding MessengeLine}" Foreground="Red" Grid.Column="1" Grid.Row="6"
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
@@ -80,10 +75,8 @@
                             <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="1" CornerRadius="10" Background="#D3D3D3" Focusable="True" Cursor="Hand">
-                            <Button Content="Регистрация" BorderThickness="0" Background="Transparent"
+                        <Button Content="Регистрация" Grid.Column="1" Focusable="True" Cursor="Hand"
                         Command="{Binding SignUpCommand}" CommandParameter="{Binding ElementName=PasswordFirst}"/>
-                        </Border>
 
                         <Label Content="Авторизация" Grid.Column="3" FontSize="12"  Cursor="Hand"
                                VerticalAlignment="Center" HorizontalAlignment="Center">

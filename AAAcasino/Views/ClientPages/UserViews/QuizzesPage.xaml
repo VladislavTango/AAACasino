@@ -4,36 +4,66 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     mc:Ignorable="d"
-                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels">
+                    xmlns:vm="clr-namespace:AAAcasino.ViewModels.ClientViewModels.UserViewModels"
+                    xmlns:converter="clr-namespace:AAAcasino.Infrastructure">
     
     <DataTemplate DataType="{x:Type vm:QuizzesViewModel}">
         <Grid d:DataContext="{d:DesignInstance vm:QuizzesViewModel}">
-            <ListBox ItemsSource="{Binding QuizModels}">
+
+            <ListBox ItemsSource="{Binding QuizModels}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel/>
+                        <UniformGrid Columns="2"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Button Command="{Binding Path=DataContext.GoToQuizCommand, 
+
+                        <Button Command="{Binding Path=DataContext.GoToQuizCommand,
                             RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}, 
                             UpdateSourceTrigger=Default}" 
-                                CommandParameter="{Binding}">
-                            <Button.Content>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Label Content="{Binding Name}"/>
-                                    <Label Content="{Binding Reward}"/>
-                                </Grid>
-                            </Button.Content>
+                            CommandParameter="{Binding}" Background="Transparent" BorderThickness="3" BorderBrush="Black"
+                                MaxHeight="350" HorizontalContentAlignment="Stretch">
+
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="0.05*"/>
+                                    <RowDefinition Height="0.2*"/>
+                                    <RowDefinition Height="0.05*"/>
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.1*"/>
+                                    <ColumnDefinition Width="0.1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Source="{Binding ImageBytes, Converter={converter:FromBytes}}"/>
+
+                                <TextBlock Text="{Binding Name}" FontSize="16" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                <Border  Grid.Row="4" Background="LightSlateGray" Grid.Column="1" Grid.ColumnSpan="2" CornerRadius="10">
+                                    <TextBlock Text="{Binding Reward}" FontSize="12"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                            </Grid>
                         </Button>
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                    
             </ListBox>
+            
         </Grid>
     </DataTemplate>
 

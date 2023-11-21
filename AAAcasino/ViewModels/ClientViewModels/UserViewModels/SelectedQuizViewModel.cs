@@ -48,7 +48,8 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
         public ICommand SendAnsweCommand { get; set; }
         private void OnSendAnswerCommand(object param)
         {
-            if(_questionNumber < QuizModel.QuizNodes.Count - 1)
+            double totalReward = 0;
+            if (_questionNumber < QuizModel.QuizNodes.Count - 1)
             {
                 QuizModel.QuizNodes[_questionNumber] = CurrentQuestion;
                 _questionNumber++;
@@ -61,29 +62,26 @@ namespace AAAcasino.ViewModels.ClientViewModels.UserViewModels
                 {
                     foreach (var answ in item.Answers)
                     {
+                        fullRight = true;
                         if (answ.UserAnswer != answ.IsCorrect)
                         {
                             fullRight = false;
                             break;
                         }
+                        if (fullRight)
+                            totalReward += QuizModel.Reward / QuizModel.QuizNodes.Count;
                     }
-                    if (!fullRight)
-                        break;
                 }
 
-                if (fullRight)
+                Task.Run(() =>
                 {
-                    double reward = QuizModel.Reward;
-                    Task.Run(() =>
+                    MainViewModel.User.Balance += totalReward;
+                    using (ApplicationContext db = new ApplicationContext())
                     {
-                        MainViewModel.User.Balance += reward;
-                        using(ApplicationContext db = new ApplicationContext())
-                        {
-                            db.userModels.Update(MainViewModel.User);
-                            db.SaveChanges();
-                        }
-                    });
-                }
+                        db.userModels.Update(MainViewModel.User);
+                        db.SaveChanges();
+                    }
+                });
 
                 //Сброс всех результатов и очистка модели
                 Task.Run(() =>
