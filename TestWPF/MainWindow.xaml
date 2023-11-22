@@ -7,9 +7,75 @@
         mc:Ignorable="d"
         Title="MainWindow" 
         WindowState="Maximized">
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="InputStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="InputStylePB" TargetType="{x:Type PasswordBox}">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.250" To="1.2" Storyboard.TargetProperty="RenderTransform.ScaleX"/>
+                                <DoubleAnimation Duration="0:0:0.250" To="1.2" Storyboard.TargetProperty="RenderTransform.ScaleY"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.250" To="1" Storyboard.TargetProperty="RenderTransform.ScaleX"/>
+                                <DoubleAnimation Duration="0:0:0.250" To="1" Storyboard.TargetProperty="RenderTransform.ScaleY"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-
-        <ListBox></ListBox>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Username:" Style="{StaticResource LabelStyle}"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Password:" Style="{StaticResource LabelStyle}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Name="UsernameTextBox" Style="{StaticResource InputStyle}"/>
+        <PasswordBox Grid.Column="1" Grid.Row="2" Name="PasswordBox" Style="{StaticResource InputStylePB}"/>
+        <Button Grid.Column="1" Grid.Row="3" Name="LogInButton" Content="Log In" Style="{StaticResource ButtonStyle}"/>
     </Grid>
 </Window>
