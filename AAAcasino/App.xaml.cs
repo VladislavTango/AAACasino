@@ -37,7 +37,7 @@ namespace AAAcasino
                         new SlotMineViewModel(),
                         new RouletteViewModel(),
                         new OneHandViewModel(),
-                    }
+                    },
                 }
             }.Show();
         }

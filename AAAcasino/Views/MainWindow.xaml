@@ -16,9 +16,9 @@
     </Window.DataContext>
     <Grid>
         <i:Interaction.Triggers>
-            <i:KeyTrigger Key="Enter">
+            <i:EventTrigger EventName="Loaded">
                 <i:InvokeCommandAction Command="{Binding InitCommand}"/>
-            </i:KeyTrigger>
+            </i:EventTrigger>
         </i:Interaction.Triggers>
         <ContentPresenter Content="{Binding SelectedPageViewModel}"/>
     </Grid>
